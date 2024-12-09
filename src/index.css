@@ -1,0 +1,29 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+*::-webkit-scrollbar {
+    display: none;
+}
+
+@layer components {
+    .view-screen {
+        @apply w-screen h-screen;
+    }
+
+    .view-full {
+        @apply w-full h-full;
+    }
+
+    .flex-center {
+        @apply flex flex-row justify-center items-center;
+    }
+
+    .box {
+        @apply border-green-500 border-dashed border-2;
+    }
+
+    .box-center {
+        @apply box flex-center;
+    }
+}
