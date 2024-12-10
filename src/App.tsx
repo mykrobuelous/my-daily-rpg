@@ -1,13 +1,13 @@
-import "./App.css";
-import MainApplication from "./view/MainApplication/MainApplication";
-import MainProvider from "./view/MainProvider/MainProvider";
+import './App.css';
+import MainApplication from './view/MainApplication/MainApplication';
+import AppProvider from './view/MainProvider/AppProvider';
 
 function App() {
-	return (
-		<MainProvider>
-			<MainApplication />
-		</MainProvider>
-	);
+    return (
+        <AppProvider>
+            <MainApplication />
+        </AppProvider>
+    );
 }
 
 export default App;
