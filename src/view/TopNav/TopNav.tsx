@@ -5,7 +5,7 @@ interface Props {
 }
 
 const TopNav: React.FC<Props> = ({ className }) => {
-    return <div className={twMerge('', className)}>TopNav</div>;
+    return <div className={twMerge('box-center', className)}>TopNav</div>;
 };
 
 export default TopNav;

@@ -4,14 +4,18 @@ import { MainContext } from './MainContext';
 import { IDBrand } from '../../utils/types/BrandType';
 
 export const MainProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-    const { dayData } = useData();
+    const { dayData, experienceData } = useData();
     const [selectedDayID, setSelectedDayID] = useState<IDBrand>();
 
     const selectedDay = dayData.find((dayItem) => dayItem.id === selectedDayID);
 
     return (
         <MainContext.Provider
-            value={{ dayData, selectedDayID: { state: selectedDay, setState: setSelectedDayID } }}
+            value={{
+                dayData,
+                experienceData,
+                selectedDayID: { state: selectedDay, setState: setSelectedDayID },
+            }}
         >
             {children}
         </MainContext.Provider>

@@ -1,7 +1,7 @@
 import { twMerge } from 'tailwind-merge';
 import { useMainContext } from '../../context/MainProvider/useMainContext';
 import dayjs from 'dayjs';
-import AddXPPoints from './AddXPPoints';
+import AddXPPoints from './components/AddXPPoints';
 
 interface Props {
     className?: string;
