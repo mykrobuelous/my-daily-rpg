@@ -1,10 +1,17 @@
 import { IDBrand } from '../utils/types/BrandType';
 
+export type ExpColorType = {
+    text: string;
+    background: string;
+    border: string;
+    xp?: string;
+};
+
 export type ExperienceType = {
     id: IDBrand;
     experience: string;
     ABV: string;
-    color: `#${string}`;
+    color: ExpColorType;
     description: string;
     guideQuestion: string;
 };

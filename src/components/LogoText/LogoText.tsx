@@ -10,7 +10,7 @@ interface Props {
     onClick?: () => void;
 }
 
-type LogoSizeType = 'sm' | 'md' | 'lg' | 'xs';
+type LogoSizeType = 'sm' | 'md' | 'lg' | 'xs' | '2xs';
 
 const LogoTextConfigs = {
     sm: {
@@ -29,6 +29,10 @@ const LogoTextConfigs = {
         font: 'text-sm',
         icon: 20,
     },
+    '2xs': {
+        font: 'text-xs',
+        icon: 14,
+    },
 };
 
 const LogoText: React.FC<Props> = ({
@@ -44,7 +48,7 @@ const LogoText: React.FC<Props> = ({
     return (
         <div
             className={twMerge(
-                'flex gap-4 items-center font-semibold',
+                'flex items-center gap-4 font-semibold',
                 cursor ? 'cursor-pointer' : '',
                 className
             )}

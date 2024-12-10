@@ -1,9 +1,10 @@
 import { twMerge } from 'tailwind-merge';
+import { ExpColorType } from '../../data/ExperienceType';
 
 interface Props {
     className?: string;
     label: string;
-    color?: string;
+    color?: ExpColorType;
     cursor?: boolean;
     selected?: boolean;
     onClick?: () => void;
@@ -12,7 +13,11 @@ interface Props {
 const Chip: React.FC<Props> = ({
     className,
     label = 'DFT',
-    color = '#589e41',
+    color = {
+        background: 'bg-white',
+        text: 'text-white',
+        border: 'border-white',
+    },
     cursor = true,
     selected = false,
     onClick,
@@ -20,14 +25,19 @@ const Chip: React.FC<Props> = ({
     return (
         <div
             className={twMerge(
-                'flex-center min-w-20 rounded-full border-2 px-4 py-1',
+                'inline-flex items-center justify-center',
+                'h-8 min-w-[5rem] rounded-full border-2',
+                'shadow-sm hover:shadow-md',
+                selected ? color.background : '',
+                selected ? 'text-white' : color.text,
+                color.border,
                 cursor ? 'cursor-pointer' : '',
+
                 className
             )}
-            style={{ backgroundColor: selected ? color : 'transparent', borderColor: color }}
             onClick={onClick}
         >
-            <p className="text-sm font-bold">{label}</p>
+            <span className="px-3 text-sm font-bold tracking-wide">{label}</span>
         </div>
     );
 };

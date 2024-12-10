@@ -1,20 +1,16 @@
 import { twMerge } from 'tailwind-merge';
-import { useMainContext } from '../../context/MainProvider/useMainContext';
-import dayjs from 'dayjs';
 import AddXPPoints from './components/AddXPPoints';
+import DailyQuestList from './components/DailyQuestList/DailyQuestList';
 
 interface Props {
     className?: string;
 }
 
 const DailyRPGView: React.FC<Props> = ({ className }) => {
-    const { selectedDayID } = useMainContext();
     return (
-        <div className={twMerge('flex flex-col px-10 py-5', className)}>
-            <p className="text-2xl font-bold">
-                {dayjs(selectedDayID.state?.date).format('MMMM DD, YYYY')}
-            </p>
-            <AddXPPoints className="mt-3 rounded-md" />
+        <div className={twMerge('flex h-full flex-col gap-2 overflow-hidden px-8 py-5', className)}>
+            <AddXPPoints className="rounded-md" />
+            <DailyQuestList className="mt-5 h-full overflow-x-scroll" />
         </div>
     );
 };
