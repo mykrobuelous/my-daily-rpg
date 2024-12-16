@@ -10,10 +10,10 @@ interface Props extends InputHTMLAttributes<HTMLInputElement> {
 
 const Input: React.FC<Props> = ({ className, label, value, onChange, ...inputAttributes }) => {
     return (
-        <div className={twMerge('flex flex-col', className)}>
-            {label && <p className="font-semibold">{label}</p>}
+        <div className={twMerge('flex flex-col gap-1', className)}>
+            {label && <label className="text-sm font-medium">{label}</label>}
             <input
-                className="p-2 pl-4 text-black border rounded"
+                className="rounded-lg border border-gray-300 p-2 pl-4 text-black shadow-inner outline-none"
                 value={value}
                 onChange={onChange}
                 {...inputAttributes}

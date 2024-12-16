@@ -11,6 +11,7 @@ export const mockExperienceData: ExperienceType[] = [
             background: 'bg-red-500',
             border: 'border-red-500',
             xp: 'text-red-400 bg-red-500/10',
+            gradient: 'bg-gradient-to-r from-red-600/50 to-red-400/50',
         },
         description: 'Habits that include anything that involves health',
         guideQuestion: 'Does this habit improve your health, hygiene, or physical strength?',
@@ -24,6 +25,7 @@ export const mockExperienceData: ExperienceType[] = [
             background: 'bg-green-500',
             border: 'border-green-500',
             xp: 'text-green-400 bg-green-500/10',
+            gradient: 'bg-gradient-to-r from-green-600/50 to-green-400/50',
         },
         description: 'Habits that include anything that involves mental health and journaling',
         guideQuestion:
@@ -38,6 +40,7 @@ export const mockExperienceData: ExperienceType[] = [
             background: 'bg-yellow-500',
             border: 'border-yellow-500',
             xp: 'text-yellow-400 bg-yellow-500/10',
+            gradient: 'bg-gradient-to-r from-yellow-600/50 to-yellow-400/50',
         },
         description: 'Habits that include anything that involves career, learning, and money',
         guideQuestion:
@@ -52,6 +55,7 @@ export const mockExperienceData: ExperienceType[] = [
             background: 'bg-cyan-500',
             border: 'border-cyan-500',
             xp: 'text-cyan-400 bg-cyan-500/10',
+            gradient: 'bg-gradient-to-r from-cyan-600/50 to-cyan-400/50',
         },
         description:
             'Habits that include anything that involves faith, prayer, and connecting with a sense of purpose',

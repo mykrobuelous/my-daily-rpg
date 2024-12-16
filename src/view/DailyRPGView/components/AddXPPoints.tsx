@@ -6,6 +6,11 @@ import { IDBrand } from '../../../utils/types/BrandType';
 import { Controller, useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
+import Select from '../../../components/Select/Select';
+import { XPType } from '../../../data/XPType';
+import dayjs from 'dayjs';
+import { generateID } from '../../../utils/function/generateID';
+import { useMainContext } from '../../../context/MainProvider/useMainContext';
 
 interface Props {
     className?: string;
@@ -15,28 +20,54 @@ const defaultValuesSchema = z.object({
     quest: z.string().min(3, 'Quest must be at least 3 characters long'),
     xpPoints: z.number(),
     type: z.string().min(3, 'Type must be selected'),
+    level: z.string(),
 });
 
 type DefaultValuesType = {
     quest: string;
     xpPoints: number;
     type: IDBrand;
+    level: 'MIN' | 'MID' | 'MAX';
 };
 
 const defaultValues: DefaultValuesType = {
     quest: '',
     xpPoints: 0,
     type: '' as IDBrand,
+    level: 'MIN',
 };
 
 const AddXPPoints: React.FC<Props> = ({ className }) => {
-    const { control, handleSubmit } = useForm<DefaultValuesType>({
+    const { selectedDayID, callAPI } = useMainContext();
+    const { control, handleSubmit, reset } = useForm<DefaultValuesType>({
         defaultValues,
         resolver: zodResolver(defaultValuesSchema),
     });
 
     const onSubmitForm = (data: DefaultValuesType) => {
-        console.log({ data });
+        const { quest, xpPoints, type, level } = data;
+
+        const body: XPType = {
+            id: generateID(),
+            experienceID: type,
+            datetimeCreated: dayjs().format('MM.DD.YYYY'),
+            questDetails: {
+                quest,
+                points: xpPoints,
+                level,
+            },
+        };
+
+        try {
+            callAPI({
+                body,
+                call: 'LOCAL/ADD_QUEST',
+                params: selectedDayID.state?.id,
+            });
+            reset();
+        } catch (error) {
+            if (error instanceof Error) console.error(error.message);
+        }
     };
 
     return (
@@ -58,12 +89,28 @@ const AddXPPoints: React.FC<Props> = ({ className }) => {
                     )}
                 />
                 <Controller
+                    name="level"
+                    control={control}
+                    render={({ field: { onChange, value } }) => (
+                        <Select
+                            value={value}
+                            onChange={onChange}
+                            label="Level"
+                            options={[
+                                { value: 'MIN', label: 'MIN' },
+                                { value: 'MID', label: 'MID' },
+                                { value: 'MAX', label: 'MAX' },
+                            ]}
+                        />
+                    )}
+                />
+                <Controller
                     name="xpPoints"
                     control={control}
                     render={({ field: { onChange, value } }) => (
                         <Input
                             label="XP Points"
-                            className="w-32"
+                            className="w-20"
                             onChange={(e) =>
                                 onChange(e.target.value === '' ? '' : Number(e.target.value))
                             }

@@ -1,4 +1,5 @@
 import { generateID } from '../utils/function/generateID';
+import { IDBrand } from '../utils/types/BrandType';
 import { DayType } from './DayType';
 
 export const mockDayData: DayType[] = [
@@ -8,7 +9,7 @@ export const mockDayData: DayType[] = [
         QuestXP: [
             {
                 id: generateID(),
-                experienceID: generateID(),
+                experienceID: 'ABC02' as IDBrand,
                 datetimeCreated: new Date().toISOString(),
                 questDetails: {
                     quest: 'Meditate for 15 minutes',
@@ -18,7 +19,7 @@ export const mockDayData: DayType[] = [
             },
             {
                 id: generateID(),
-                experienceID: generateID(),
+                experienceID: 'ABC03' as IDBrand,
                 datetimeCreated: new Date().toISOString(),
                 questDetails: {
                     quest: 'Exercise for 5 minutes',
@@ -28,7 +29,7 @@ export const mockDayData: DayType[] = [
             },
             {
                 id: generateID(),
-                experienceID: generateID(),
+                experienceID: 'ABC01' as IDBrand,
                 datetimeCreated: new Date().toISOString(),
                 questDetails: {
                     quest: 'Read a book for 30 minutes',
@@ -38,7 +39,7 @@ export const mockDayData: DayType[] = [
             },
             {
                 id: generateID(),
-                experienceID: generateID(),
+                experienceID: 'ABC04' as IDBrand,
                 datetimeCreated: new Date().toISOString(),
                 questDetails: {
                     quest: 'Write in a journal for 20 minutes',
@@ -48,7 +49,7 @@ export const mockDayData: DayType[] = [
             },
             {
                 id: generateID(),
-                experienceID: generateID(),
+                experienceID: 'ABC02' as IDBrand,
                 datetimeCreated: new Date().toISOString(),
                 questDetails: {
                     quest: 'Practice a hobby for 1 hour',

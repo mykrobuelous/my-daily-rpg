@@ -5,6 +5,7 @@ export type ExpColorType = {
     background: string;
     border: string;
     xp?: string;
+    gradient?: string;
 };
 
 export type ExperienceType = {
