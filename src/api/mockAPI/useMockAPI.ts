@@ -4,6 +4,7 @@ import { BodyType } from './mockAPITypes';
 import { ErrorAPI } from '../utlis/ErrorAPI';
 import { assertNotUndefined } from '../utlis/assertNotUndefined';
 import { cleanError } from '../../utils/function/cleanError';
+import dayjs from 'dayjs';
 
 const useMockAPI = () => {
     const [habitData, setHabitData] = useState(mockDayData);
@@ -14,6 +15,7 @@ const useMockAPI = () => {
         switch (call) {
             case 'LOCAL/ADD_QUEST':
                 assertNotUndefined('Params', params);
+                assertNotUndefined('Body', body);
 
                 setHabitData((prevHabit) => {
                     const newHabit = habitData.find((habitItem) => habitItem.id === params);
@@ -44,6 +46,24 @@ const useMockAPI = () => {
                         );
                     }
                     return prevHabit;
+                });
+                break;
+
+            case 'LOCAL/ADD_DAY':
+                assertNotUndefined('Body', body);
+                setHabitData((prevHabit) => {
+                    const newDay = {
+                        id: body.id,
+                        date: dayjs(body.date).format('MM.DD.YYYY'),
+                        QuestXP: [],
+                    };
+                    return [...prevHabit, newDay];
+                });
+                break;
+
+            case 'LOCAL/DELETE_DAY':
+                setHabitData((prevHabit) => {
+                    return prevHabit.filter((habitItem) => habitItem.id !== params);
                 });
                 break;
 

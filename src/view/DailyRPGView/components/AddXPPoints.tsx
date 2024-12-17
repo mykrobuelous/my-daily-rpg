@@ -116,7 +116,6 @@ const AddXPPoints: React.FC<Props> = ({ className }) => {
                             }
                             value={value}
                             type="number"
-                            max={100}
                         />
                     )}
                 />

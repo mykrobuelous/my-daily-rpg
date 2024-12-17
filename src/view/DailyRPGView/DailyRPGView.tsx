@@ -15,7 +15,7 @@ const DailyRPGView: React.FC<Props> = ({ className }) => {
             )}
         >
             <AddXPPoints className="rounded-md" />
-            <DailyQuestList className="mt-5 h-full overflow-x-scroll" />
+            <DailyQuestList className="z-0 mt-5 h-full overflow-x-scroll" />
         </div>
     );
 };

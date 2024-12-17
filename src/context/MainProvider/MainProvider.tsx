@@ -1,13 +1,17 @@
-import React, { ReactNode, useState } from 'react';
+import { FC, ReactNode, useState } from 'react';
 import useData from '../../hooks/useData';
 import { MainContext } from './MainContext';
 import { IDBrand } from '../../utils/types/BrandType';
 
-export const MainProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-    const { dayData, experienceData, experienceDataMap, callAPI } = useData();
+export const MainProvider: FC<{ children: ReactNode }> = ({ children }) => {
+    const { dayData, experienceData, experienceDataMap, callAPI, levelData } = useData();
     const [selectedDayID, setSelectedDayID] = useState<IDBrand>();
 
     const selectedDay = dayData.find((dayItem) => dayItem.id === selectedDayID);
+
+    const routeHome = () => {
+        setSelectedDayID(undefined);
+    };
 
     return (
         <MainContext.Provider
@@ -16,7 +20,9 @@ export const MainProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
                 experienceData,
                 experienceDataMap,
                 selectedDayID: { state: selectedDay, setState: setSelectedDayID },
+                route: { routeHome },
                 callAPI,
+                levelData,
             }}
         >
             {children}

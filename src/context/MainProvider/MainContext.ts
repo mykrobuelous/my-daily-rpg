@@ -13,6 +13,10 @@ export interface MainContextProps {
         setState: (id: IDBrand) => void;
     };
     callAPI: CallAPIType;
+    route: {
+        routeHome: () => void;
+    };
+    levelData: number;
 }
 
 export const MainContext = createContext<MainContextProps | undefined>(undefined);

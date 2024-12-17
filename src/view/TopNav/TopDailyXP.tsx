@@ -2,7 +2,6 @@ import { twMerge } from 'tailwind-merge';
 import { useMainContext } from '../../context/MainProvider/useMainContext';
 import ChipPoints from '../../components/Chip/ChipPoints';
 import { v4 as uuidv4 } from 'uuid';
-
 interface Props {
     className?: string;
 }
@@ -25,12 +24,13 @@ const TopDailyXP: React.FC<Props> = ({ className }) => {
     });
 
     return (
-        <div className={twMerge('flex items-center gap-4', className)}>
+        <div className={twMerge('flex min-h-7 items-center gap-4', className)}>
             {expTotalPoints.map((expItem) => {
+                if (expItem.xpPoints === 0 || typeof expItem.xpPoints === 'undefined') return null;
                 return (
                     <ChipPoints
                         key={expItem.id}
-                        content={expItem.xpPoints ? expItem.xpPoints.toString() : '0'}
+                        content={expItem.xpPoints.toString()}
                         color={expItem.color.xp}
                     />
                 );

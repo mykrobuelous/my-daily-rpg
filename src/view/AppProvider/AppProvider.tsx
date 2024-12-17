@@ -1,4 +1,5 @@
 import { MainProvider } from '../../context/MainProvider/MainProvider';
+import { ModalProvider } from '../../context/ModalProvider/ModalProvider';
 
 interface Props {
     children?: React.ReactNode;
@@ -7,7 +8,9 @@ interface Props {
 const AppProvider: React.FC<Props> = ({ children }) => {
     return (
         <MainProvider>
-            <div className="bg-gray-800 view-screen">{children}</div>
+            <ModalProvider>
+                <div className="view-screen bg-gray-800">{children}</div>
+            </ModalProvider>
         </MainProvider>
     );
 };

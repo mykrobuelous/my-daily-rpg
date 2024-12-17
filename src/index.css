@@ -3,30 +3,30 @@
 @tailwind utilities;
 
 *::-webkit-scrollbar {
-	display: none;
+    display: none;
 }
 
 @layer components {
-	body {
-		@apply text-white;
-	}
-	.view-screen {
-		@apply w-screen h-screen;
-	}
+    body {
+        @apply text-white;
+    }
+    .view-screen {
+        @apply h-screen w-screen;
+    }
 
-	.view-full {
-		@apply w-full h-full;
-	}
+    .view-full {
+        @apply h-full w-full;
+    }
 
-	.flex-center {
-		@apply flex flex-row justify-center items-center;
-	}
+    .flex-center {
+        @apply flex flex-row items-center justify-center;
+    }
 
-	.box {
-		@apply border-green-500 border-dashed border-2;
-	}
+    .box {
+        @apply border-2 border-dashed border-green-500;
+    }
 
-	.box-center {
-		@apply box flex-center;
-	}
+    .box-center {
+        @apply box flex-center;
+    }
 }
