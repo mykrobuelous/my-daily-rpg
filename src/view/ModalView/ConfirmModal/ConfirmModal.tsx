@@ -4,9 +4,18 @@ import Button from '../../../components/Button/Button';
 interface Props {
     className?: string;
     onClose: () => void;
+    onConfirm: () => void;
+    title?: string;
+    message?: string;
 }
 
-const ConfirmModal: React.FC<Props> = ({ className, onClose }) => {
+const ConfirmModal: React.FC<Props> = ({
+    className,
+    onClose,
+    onConfirm,
+    title = 'Confirm',
+    message = 'Are you sure you want to do this?',
+}) => {
     return (
         <div
             className={twMerge(
@@ -15,8 +24,8 @@ const ConfirmModal: React.FC<Props> = ({ className, onClose }) => {
             )}
             onClick={onClose}
         >
-            <h2 className="text-2xl font-semibold text-gray-800">Confirm Modal</h2>
-            <p className="text-gray-600">Are you sure you want to do this?</p>
+            <h2 className="text-2xl font-semibold text-gray-800">{title}</h2>
+            <p className="text-gray-600">{message}</p>
             <div className="mt-4 flex w-full justify-end gap-3">
                 <Button
                     onClick={onClose}
@@ -25,7 +34,7 @@ const ConfirmModal: React.FC<Props> = ({ className, onClose }) => {
                     className="h-10 w-24 rounded-lg transition-colors hover:bg-gray-100"
                 />
                 <Button
-                    onClick={onClose}
+                    onClick={onConfirm}
                     text="Confirm"
                     variant="blue"
                     className="h-10 w-24 rounded-lg shadow-sm transition-all hover:shadow-md"

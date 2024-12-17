@@ -75,7 +75,7 @@ const AddXPPoints: React.FC<Props> = ({ className }) => {
             className={twMerge('flex flex-col gap-4', className)}
             onSubmit={handleSubmit(onSubmitForm)}
         >
-            <div className="flex items-end gap-4">
+            <div className="flex items-end gap-8">
                 <Controller
                     name="quest"
                     control={control}

@@ -13,7 +13,7 @@ interface Props {
 
 const TopNav: React.FC<Props> = ({ className }) => {
     const { selectedDayID, callAPI, route, levelData } = useMainContext();
-    const { confirmModal } = useModalContext();
+    const { showConfirmModal } = useModalContext();
 
     const totalQuest = selectedDayID.state?.QuestXP.length;
     const totalXP = selectedDayID.state?.QuestXP.reduce((acc, questItem) => {
@@ -44,12 +44,17 @@ const TopNav: React.FC<Props> = ({ className }) => {
                 <Trash2
                     className="ml-auto cursor-pointer hover:text-red-400"
                     onClick={() => {
-                        // callAPI({
-                        //     call: 'LOCAL/DELETE_DAY',
-                        //     params: selectedDayID.state?.id,
-                        // });
-                        // route.routeHome();
-                        confirmModal.openModal();
+                        showConfirmModal(
+                            () => {
+                                callAPI({
+                                    call: 'LOCAL/DELETE_DAY',
+                                    params: selectedDayID.state?.id,
+                                });
+                                route.routeHome();
+                            },
+                            'Delete Day',
+                            `Are you certain you want to proceed with deleting ${dayjs(selectedDayID.state?.date, 'MM.DD.YYYY').format('MMMM DD, YYYY')}? This action will permanently remove the selected day and all associated quest data. This operation cannot be reversed.`
+                        );
                     }}
                 />
             </div>

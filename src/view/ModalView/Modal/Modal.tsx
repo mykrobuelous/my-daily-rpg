@@ -9,14 +9,9 @@ interface Props {
 
 const Modal: React.FC<Props> = ({ className, children, onClose }) => {
     return (
-        <div className={twMerge('', className)}>
-            <div className="view-screen flex-center absolute z-10">
-                <div
-                    className="view-screen absolute bg-gray-800 opacity-70"
-                    onClick={onClose}
-                ></div>
-                {children}
-            </div>
+        <div className={twMerge('view-screen flex-center fixed left-0 top-0', className)}>
+            <div className="z-10">{children}</div>
+            <div className="view-screen absolute bg-gray-800 opacity-70" onClick={onClose}></div>
         </div>
     );
 };

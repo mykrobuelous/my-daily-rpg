@@ -8,7 +8,7 @@ export type ModalType = {
 
 export interface ModalContextProps {
     newDateModal: ModalType;
-    confirmModal: ModalType;
+    showConfirmModal: (onConfirm: () => void, title?: string, message?: string) => void;
 }
 
 export const ModalContext = createContext<ModalContextProps | undefined>(undefined);
