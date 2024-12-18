@@ -6,6 +6,8 @@ import Calendar from 'react-calendar';
 import dayjs from 'dayjs';
 import Button from '../../../components/Button/Button';
 import { generateID } from '../../../utils/function/generateID';
+import { runToast } from '../../../lib/ReactHotToast/runToast';
+import CusCheckIcon from '../../../lib/ReactHotToast/CusCheckIcon';
 
 interface Props {
     className?: string;
@@ -67,6 +69,7 @@ const NewDateModal: React.FC<Props> = ({ className, onClose }) => {
                         });
                         setDate(null);
                         selectedDayID.setState(newID);
+                        runToast('New day has been added.', <CusCheckIcon />);
                         onClose();
                     }}
                     text="Add"

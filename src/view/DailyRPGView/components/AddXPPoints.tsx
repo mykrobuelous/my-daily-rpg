@@ -11,6 +11,8 @@ import { XPType } from '../../../data/XPType';
 import dayjs from 'dayjs';
 import { generateID } from '../../../utils/function/generateID';
 import { useMainContext } from '../../../context/MainProvider/useMainContext';
+import { runToast } from '../../../lib/ReactHotToast/runToast';
+import CusCheckIcon from '../../../lib/ReactHotToast/CusCheckIcon';
 
 interface Props {
     className?: string;
@@ -65,6 +67,7 @@ const AddXPPoints: React.FC<Props> = ({ className }) => {
                 params: selectedDayID.state?.id,
             });
             reset();
+            runToast('Quest added successfully', <CusCheckIcon />);
         } catch (error) {
             if (error instanceof Error) console.error(error.message);
         }

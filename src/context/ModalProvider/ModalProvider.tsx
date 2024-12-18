@@ -4,10 +4,12 @@ import Modal from '../../view/ModalView/Modal/Modal';
 import NewDateModal from '../../view/ModalView/NewDateModal/NewDateModal';
 import ConfirmModal from '../../view/ModalView/ConfirmModal/ConfirmModal';
 import ReactDOM from 'react-dom';
+import UpdateQuestModal from '../../view/ModalView/UpdateQuestModal/UpdateQuestModal';
 
 export const ModalProvider: FC<{ children: ReactNode }> = ({ children }) => {
     const [newDateModal, setNewDateModal] = useState<boolean>(false);
     const [confirmModalContent, setConfirmModalContent] = useState<ReactNode | null>(null);
+    const [updateQuestModalContent, setUpdateQuestModalContent] = useState<ReactNode | null>(null);
 
     const showConfirmModal = (onConfirm: () => void, title?: string, message?: string) => {
         const content = (
@@ -24,6 +26,11 @@ export const ModalProvider: FC<{ children: ReactNode }> = ({ children }) => {
         setConfirmModalContent(content);
     };
 
+    const showUpdateQuestModal = (onConfirm: () => void) => {
+        const content = <UpdateQuestModal />;
+        setUpdateQuestModalContent(content);
+    };
+
     return (
         <ModalContext.Provider
             value={{
@@ -33,6 +40,7 @@ export const ModalProvider: FC<{ children: ReactNode }> = ({ children }) => {
                     closeModal: () => setNewDateModal(false),
                 },
                 showConfirmModal,
+                showUpdateQuestModal,
             }}
         >
             {children}
@@ -47,6 +55,13 @@ export const ModalProvider: FC<{ children: ReactNode }> = ({ children }) => {
                 ReactDOM.createPortal(
                     <Modal onClose={() => setConfirmModalContent(null)}>
                         {confirmModalContent}
+                    </Modal>,
+                    document.body
+                )}
+            {updateQuestModalContent &&
+                ReactDOM.createPortal(
+                    <Modal onClose={() => setUpdateQuestModalContent(null)}>
+                        {updateQuestModalContent}
                     </Modal>,
                     document.body
                 )}

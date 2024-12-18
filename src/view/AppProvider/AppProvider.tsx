@@ -1,3 +1,4 @@
+import { Toaster } from 'react-hot-toast';
 import { MainProvider } from '../../context/MainProvider/MainProvider';
 import { ModalProvider } from '../../context/ModalProvider/ModalProvider';
 
@@ -10,6 +11,7 @@ const AppProvider: React.FC<Props> = ({ children }) => {
         <MainProvider>
             <ModalProvider>
                 <div className="view-screen bg-gray-800">{children}</div>
+                <Toaster position="top-right" />
             </ModalProvider>
         </MainProvider>
     );

@@ -6,6 +6,8 @@ import { Calendar, ChartLine, ChartNoAxesColumn, FileChartColumn, Trash2 } from 
 import RPGLevel from './RPGLevel';
 import TopDailyXP from './TopDailyXP';
 import { useModalContext } from '../../context/ModalProvider/useModalContext';
+import { runToast } from '../../lib/ReactHotToast/runToast';
+import CusCheckIcon from '../../lib/ReactHotToast/CusCheckIcon';
 
 interface Props {
     className?: string;
@@ -50,10 +52,14 @@ const TopNav: React.FC<Props> = ({ className }) => {
                                     call: 'LOCAL/DELETE_DAY',
                                     params: selectedDayID.state?.id,
                                 });
+                                runToast(
+                                    `${dayjs(selectedDayID.state?.date).format('MMMM DD, YYYY')} has been deleted.`,
+                                    <CusCheckIcon />
+                                );
                                 route.routeHome();
                             },
                             'Delete Day',
-                            `Are you certain you want to proceed with deleting ${dayjs(selectedDayID.state?.date, 'MM.DD.YYYY').format('MMMM DD, YYYY')}? This action will permanently remove the selected day and all associated quest data. This operation cannot be reversed.`
+                            `Are you certain you want to proceed with deleting ${dayjs(selectedDayID.state?.date, 'MM.DD.YYYY').format('MMMM DD, YYYY')}? This operation cannot be reversed.`
                         );
                     }}
                 />

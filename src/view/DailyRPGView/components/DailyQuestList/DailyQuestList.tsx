@@ -1,6 +1,9 @@
 import { twMerge } from 'tailwind-merge';
 import { useMainContext } from '../../../../context/MainProvider/useMainContext';
 import DailyQuestItem from './DailyQuestItem';
+import { runToast } from '../../../../lib/ReactHotToast/runToast';
+import CusCheckIcon from '../../../../lib/ReactHotToast/CusCheckIcon';
+import { useModalContext } from '../../../../context/ModalProvider/useModalContext';
 
 interface Props {
     className?: string;
@@ -11,6 +14,7 @@ const DailyQuestList: React.FC<Props> = ({ className }) => {
         selectedDayID: { state: selectedDay },
         callAPI,
     } = useMainContext();
+    const { showConfirmModal, showUpdateQuestModal } = useModalContext();
 
     return (
         <div className={twMerge('flex flex-col', className)}>
@@ -24,11 +28,20 @@ const DailyQuestList: React.FC<Props> = ({ className }) => {
                         key={questItem.id}
                         questItem={questItem}
                         onTrash={() => {
-                            console.log('Delete Quest');
-                            callAPI({
-                                call: 'LOCAL/DELETE_QUEST',
-                                body: { habitID: selectedDay.id, questID: questItem.id },
-                            });
+                            showConfirmModal(
+                                () => {
+                                    callAPI({
+                                        call: 'LOCAL/DELETE_QUEST',
+                                        body: { habitID: selectedDay.id, questID: questItem.id },
+                                    });
+                                    runToast('Quest has been deleted.', <CusCheckIcon />);
+                                },
+                                'Delete Quest',
+                                `Are you sure you want to delete "${questItem.questDetails.quest}" quest?`
+                            );
+                        }}
+                        onClick={() => {
+                            showUpdateQuestModal(() => {});
                         }}
                     />
                 )).reverse()

@@ -10,9 +10,10 @@ interface Props {
     className?: string;
     questItem: XPType;
     onTrash: () => void;
+    onClick?: () => void;
 }
 
-const DailyQuestItem: React.FC<Props> = ({ className, questItem, onTrash }) => {
+const DailyQuestItem: React.FC<Props> = ({ className, questItem, onTrash, onClick }) => {
     const { experienceDataMap } = useData();
 
     const colorMap = experienceDataMap[questItem.experienceID].color;
@@ -23,8 +24,10 @@ const DailyQuestItem: React.FC<Props> = ({ className, questItem, onTrash }) => {
                 'flex items-center',
                 'group relative mb-2 rounded-xl border border-gray-700/50 bg-gray-800/50 p-4 backdrop-blur-sm',
                 'hover:scale-[1.02] hover:bg-gray-700/50 hover:shadow-lg hover:shadow-gray-900/20',
+                'cursor-pointer',
                 className
             )}
+            onClick={onClick}
         >
             <div className="flex w-full items-start justify-between">
                 <div className="flex items-center gap-3">
