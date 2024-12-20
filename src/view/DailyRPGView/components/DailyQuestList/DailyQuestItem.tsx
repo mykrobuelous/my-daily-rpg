@@ -5,6 +5,7 @@ import LogoText from '../../../../components/LogoText/LogoText';
 import { getLevelText } from '../../../../utils/function/getDifficultyText';
 import ChipPoints from '../../../../components/Chip/ChipPoints';
 import useData from '../../../../hooks/useData';
+import dayjs from 'dayjs';
 
 interface Props {
     className?: string;
@@ -32,10 +33,15 @@ const DailyQuestItem: React.FC<Props> = ({ className, questItem, onTrash, onClic
             <div className="flex w-full items-start justify-between">
                 <div className="flex items-center gap-3">
                     <div className="flex w-80 items-center gap-2">
-                        <CircleCheckBig className={twMerge('mt-1', colorMap.text)} size={24} />
-                        <p className="text-base font-semibold text-gray-100">
-                            {questItem.questDetails.quest}
-                        </p>
+                        <CircleCheckBig className={twMerge('mt-1', colorMap.text)} size={32} />
+                        <div>
+                            <p className="text-base font-semibold text-gray-100">
+                                {questItem.questDetails.quest}
+                            </p>
+                            <p className="text-xs text-gray-400">
+                                {dayjs(questItem.datetimeCreated).format('h:mm A')}
+                            </p>
+                        </div>
                     </div>
                     <div className="flex gap-2">
                         <div className="flex items-center gap-3 text-xs text-gray-400">
@@ -60,7 +66,10 @@ const DailyQuestItem: React.FC<Props> = ({ className, questItem, onTrash, onClic
                         <Trash2
                             size={18}
                             className="text-gray-400 transition-colors hover:text-red-500"
-                            onClick={onTrash}
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                onTrash();
+                            }}
                         />
                     </button>
                 </div>

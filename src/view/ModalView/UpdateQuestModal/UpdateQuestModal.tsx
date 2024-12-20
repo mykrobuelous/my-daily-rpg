@@ -9,6 +9,7 @@ import {
     DefaultQuestValues,
     defaultQuestZodSchema,
 } from '../../../utils/types/FormTypes/DefaultQuestTypes';
+import { RefreshCcw } from 'lucide-react';
 
 interface Props {
     className?: string;
@@ -18,10 +19,20 @@ interface Props {
 }
 
 const UpdateQuestModal: React.FC<Props> = ({ className, updateQuest, onClose, onConfirm }) => {
-    const { control, handleSubmit } = useForm<DefaultQuestValues>({
+    const {
+        control,
+        handleSubmit,
+        formState: { isValid },
+        watch,
+        reset,
+    } = useForm<DefaultQuestValues>({
         defaultValues: updateQuest,
         resolver: zodResolver(defaultQuestZodSchema),
     });
+
+    const fieldValues = watch();
+
+    const isFormChanged = JSON.stringify(fieldValues) !== JSON.stringify(updateQuest);
 
     const onSubmitForm = (data: DefaultQuestValues) => {
         onConfirm(data);
@@ -34,8 +45,17 @@ const UpdateQuestModal: React.FC<Props> = ({ className, updateQuest, onClose, on
                 className
             )}
         >
-            <div className="border-b border-gray-700 pb-3">
+            <div className="flex items-center justify-between border-b border-gray-700 pb-3">
                 <h2 className="text-2xl font-bold text-white">Add New Day</h2>
+                <RefreshCcw
+                    className={twMerge(
+                        'cursor-default text-gray-600',
+                        isFormChanged ? 'cursor-pointer text-white hover:text-yellow-600' : ''
+                    )}
+                    onClick={() => {
+                        if (isFormChanged) reset(updateQuest);
+                    }}
+                />
             </div>
             <form className={twMerge('flex flex-col gap-2', className)}>
                 <div className="flex items-end gap-8">
@@ -108,6 +128,7 @@ const UpdateQuestModal: React.FC<Props> = ({ className, updateQuest, onClose, on
                     onClick={handleSubmit(onSubmitForm)}
                     className="h-8"
                     variant="blue"
+                    disabled={!isValid || !isFormChanged}
                 />
             </div>
         </div>

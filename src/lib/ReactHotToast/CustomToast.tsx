@@ -1,4 +1,3 @@
-import { LucideIcon } from 'lucide-react';
 import { ReactNode } from 'react';
 import { twMerge } from 'tailwind-merge';
 

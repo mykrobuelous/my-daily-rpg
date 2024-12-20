@@ -16,6 +16,7 @@ import {
     DefaultQuestValues,
     defaultQuestZodSchema,
 } from '../../../utils/types/FormTypes/DefaultQuestTypes';
+import { RefreshCcw } from 'lucide-react';
 
 interface Props {
     className?: string;
@@ -30,10 +31,20 @@ const defaultValues: DefaultQuestValues = {
 
 const AddXPPoints: React.FC<Props> = ({ className }) => {
     const { selectedDayID, callAPI } = useMainContext();
-    const { control, handleSubmit, reset } = useForm<DefaultQuestValues>({
+    const {
+        control,
+        handleSubmit,
+        reset,
+        formState: { isValid },
+        watch,
+    } = useForm<DefaultQuestValues>({
         defaultValues,
         resolver: zodResolver(defaultQuestZodSchema),
     });
+
+    const fieldValues = watch();
+
+    const isFormChanged = JSON.stringify(fieldValues) !== JSON.stringify(defaultValues);
 
     const onSubmitForm = (data: DefaultQuestValues) => {
         const { quest, xpPoints, type, level } = data;
@@ -41,7 +52,7 @@ const AddXPPoints: React.FC<Props> = ({ className }) => {
         const body: XPType = {
             id: generateID(),
             experienceID: type,
-            datetimeCreated: dayjs().format('MM.DD.YYYY'),
+            datetimeCreated: dayjs().toString(),
             questDetails: {
                 quest,
                 points: xpPoints,
@@ -112,7 +123,7 @@ const AddXPPoints: React.FC<Props> = ({ className }) => {
                     )}
                 />
             </div>
-            <div className="flex justify-between">
+            <div className="flex items-center gap-4">
                 <Controller
                     name="type"
                     control={control}
@@ -120,7 +131,17 @@ const AddXPPoints: React.FC<Props> = ({ className }) => {
                         <ChipSelection selectedChip={{ state: value, setState: onChange }} />
                     )}
                 />
-                <Button text="Add" type="submit" className="w-56 p-1" />
+                <RefreshCcw
+                    className={twMerge(
+                        'ml-auto cursor-default text-gray-600',
+                        isFormChanged ? 'cursor-pointer text-white hover:text-yellow-600' : ''
+                    )}
+                    onClick={() => {
+                        if (isFormChanged) reset(defaultValues);
+                    }}
+                    size={24}
+                />
+                <Button text="Add" type="submit" className="w-32 p-1" disabled={!isValid} />
             </div>
         </form>
     );
