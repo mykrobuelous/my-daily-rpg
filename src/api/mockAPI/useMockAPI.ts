@@ -32,6 +32,37 @@ const useMockAPI = () => {
                 });
                 break;
 
+            case 'LOCAL/UPDATE_QUEST':
+                assertNotUndefined('Params', params);
+                assertNotUndefined('Body', body);
+                setHabitData((prevHabit) => {
+                    const newHabit = habitData.find((habitItem) => habitItem.id === params);
+                    if (newHabit) {
+                        const updatedHabit = {
+                            ...newHabit,
+                            QuestXP: newHabit.QuestXP.map((questItem) =>
+                                questItem.id === body.id
+                                    ? {
+                                          ...questItem,
+                                          experienceID: body.experienceID,
+                                          questDetails: {
+                                              quest: body.questDetails.quest,
+                                              points: body.questDetails.points,
+                                              level: body.questDetails.level,
+                                          },
+                                      }
+                                    : questItem
+                            ),
+                        };
+                        return habitData.map((habitItem) =>
+                            habitItem.id === params ? updatedHabit : habitItem
+                        );
+                    }
+                    return prevHabit;
+                });
+
+                break;
+
             case 'LOCAL/DELETE_QUEST':
                 assertNotUndefined('Body', body);
                 setHabitData((prevHabit) => {
@@ -39,7 +70,9 @@ const useMockAPI = () => {
                     if (newHabit) {
                         const updatedHabit = {
                             ...newHabit,
-                            QuestXP: newHabit.QuestXP.filter((quest) => quest.id !== body.questID),
+                            QuestXP: newHabit.QuestXP.filter(
+                                (questItem) => questItem.id !== body.questID
+                            ),
                         };
                         return habitData.map((habitItem) =>
                             habitItem.id === body.habitID ? updatedHabit : habitItem

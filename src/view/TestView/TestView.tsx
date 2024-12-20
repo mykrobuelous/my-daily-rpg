@@ -9,6 +9,7 @@ interface Props {
 
 const TestView: React.FC<Props> = ({ className }) => {
     const onClick = () => {
+        console.log();
         runToast('Test');
     };
 

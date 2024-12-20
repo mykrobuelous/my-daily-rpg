@@ -4,7 +4,6 @@ import Button from '../../../components/Button/Button';
 import ChipSelection from './ChipSelection';
 import { IDBrand } from '../../../utils/types/BrandType';
 import { Controller, useForm } from 'react-hook-form';
-import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import Select from '../../../components/Select/Select';
 import { XPType } from '../../../data/XPType';
@@ -13,26 +12,16 @@ import { generateID } from '../../../utils/function/generateID';
 import { useMainContext } from '../../../context/MainProvider/useMainContext';
 import { runToast } from '../../../lib/ReactHotToast/runToast';
 import CusCheckIcon from '../../../lib/ReactHotToast/CusCheckIcon';
+import {
+    DefaultQuestValues,
+    defaultQuestZodSchema,
+} from '../../../utils/types/FormTypes/DefaultQuestTypes';
 
 interface Props {
     className?: string;
 }
 
-const defaultValuesSchema = z.object({
-    quest: z.string().min(3, 'Quest must be at least 3 characters long'),
-    xpPoints: z.number(),
-    type: z.string().min(3, 'Type must be selected'),
-    level: z.string(),
-});
-
-type DefaultValuesType = {
-    quest: string;
-    xpPoints: number;
-    type: IDBrand;
-    level: 'MIN' | 'MID' | 'MAX';
-};
-
-const defaultValues: DefaultValuesType = {
+const defaultValues: DefaultQuestValues = {
     quest: '',
     xpPoints: 0,
     type: '' as IDBrand,
@@ -41,12 +30,12 @@ const defaultValues: DefaultValuesType = {
 
 const AddXPPoints: React.FC<Props> = ({ className }) => {
     const { selectedDayID, callAPI } = useMainContext();
-    const { control, handleSubmit, reset } = useForm<DefaultValuesType>({
+    const { control, handleSubmit, reset } = useForm<DefaultQuestValues>({
         defaultValues,
-        resolver: zodResolver(defaultValuesSchema),
+        resolver: zodResolver(defaultQuestZodSchema),
     });
 
-    const onSubmitForm = (data: DefaultValuesType) => {
+    const onSubmitForm = (data: DefaultQuestValues) => {
         const { quest, xpPoints, type, level } = data;
 
         const body: XPType = {

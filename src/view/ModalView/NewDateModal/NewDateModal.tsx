@@ -54,7 +54,9 @@ const NewDateModal: React.FC<Props> = ({ className, onClose }) => {
                 className="rounded-lg text-black"
                 tileDisabled={disableSpecificDates}
             />
-            <div className="flex justify-between gap-10">
+            <div
+                className={twMerge('flex justify-between gap-10', 'border-t border-gray-700 pt-4')}
+            >
                 <Button onClick={onClose} text="Close" className="h-8" variant="red" />
                 <Button
                     onClick={() => {

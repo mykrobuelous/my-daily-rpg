@@ -41,7 +41,26 @@ const DailyQuestList: React.FC<Props> = ({ className }) => {
                             );
                         }}
                         onClick={() => {
-                            showUpdateQuestModal(() => {});
+                            showUpdateQuestModal(
+                                (data) => {
+                                    callAPI({
+                                        call: 'LOCAL/UPDATE_QUEST',
+                                        body: {
+                                            ...questItem,
+                                            experienceID: data.type,
+                                            questDetails: {
+                                                quest: data.quest,
+                                                points: data.xpPoints,
+                                                level: data.level,
+                                            },
+                                        },
+                                        params: selectedDay.id,
+                                    });
+                                    runToast('Quest has been updated.', <CusCheckIcon />);
+                                },
+                                selectedDay.id,
+                                questItem.id
+                            );
                         }}
                     />
                 )).reverse()

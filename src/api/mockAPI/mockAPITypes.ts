@@ -5,6 +5,7 @@ export type UnionUndefinedHelper<T> = T | undefined;
 
 export const mockAPICalls = {
     addQuest: 'LOCAL/ADD_QUEST',
+    updateQuest: 'LOCAL/UPDATE_QUEST',
     deleteQuest: 'LOCAL/DELETE_QUEST',
     addDay: 'LOCAL/ADD_DAY',
     deleteDay: 'LOCAL/DELETE_DAY',
@@ -16,6 +17,7 @@ export type ParamsType = string | IDBrand;
 
 export type BodyType =
     | AddTypeHelper<'LOCAL/ADD_QUEST', XPType, IDBrand>
+    | AddTypeHelper<'LOCAL/UPDATE_QUEST', XPType, IDBrand>
     | AddTypeHelper<'LOCAL/DELETE_QUEST', DeleteQuestType>
     | AddTypeHelper<'LOCAL/ADD_DAY', NewDayType>
     | AddTypeHelper<'LOCAL/DELETE_DAY', undefined, IDBrand>;

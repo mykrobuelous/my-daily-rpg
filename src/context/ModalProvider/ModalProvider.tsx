@@ -5,11 +5,15 @@ import NewDateModal from '../../view/ModalView/NewDateModal/NewDateModal';
 import ConfirmModal from '../../view/ModalView/ConfirmModal/ConfirmModal';
 import ReactDOM from 'react-dom';
 import UpdateQuestModal from '../../view/ModalView/UpdateQuestModal/UpdateQuestModal';
+import { IDBrand } from '../../utils/types/BrandType';
+import { DefaultQuestValues } from '../../utils/types/FormTypes/DefaultQuestTypes';
+import { useMainContext } from '../MainProvider/useMainContext';
 
 export const ModalProvider: FC<{ children: ReactNode }> = ({ children }) => {
     const [newDateModal, setNewDateModal] = useState<boolean>(false);
     const [confirmModalContent, setConfirmModalContent] = useState<ReactNode | null>(null);
     const [updateQuestModalContent, setUpdateQuestModalContent] = useState<ReactNode | null>(null);
+    const { dayData } = useMainContext();
 
     const showConfirmModal = (onConfirm: () => void, title?: string, message?: string) => {
         const content = (
@@ -26,8 +30,33 @@ export const ModalProvider: FC<{ children: ReactNode }> = ({ children }) => {
         setConfirmModalContent(content);
     };
 
-    const showUpdateQuestModal = (onConfirm: () => void) => {
-        const content = <UpdateQuestModal />;
+    const showUpdateQuestModal = (
+        onConfirm: (questValues: DefaultQuestValues) => void,
+        dayID: IDBrand,
+        questID: IDBrand
+    ) => {
+        const newDayData = dayData.find((dayItem) => dayItem.id === dayID);
+        if (!newDayData) return;
+
+        const questData = newDayData.QuestXP.find((questItem) => questItem.id === questID);
+        if (!questData) return;
+
+        const updateQuest: DefaultQuestValues = {
+            quest: questData.questDetails.quest,
+            xpPoints: questData.questDetails.points,
+            type: questData.experienceID,
+            level: questData.questDetails.level,
+        };
+
+        const content = (
+            <UpdateQuestModal
+                updateQuest={updateQuest}
+                onConfirm={onConfirm}
+                onClose={() => {
+                    setUpdateQuestModalContent(null);
+                }}
+            />
+        );
         setUpdateQuestModalContent(content);
     };
 

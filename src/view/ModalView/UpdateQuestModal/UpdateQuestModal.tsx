@@ -3,63 +3,41 @@ import Button from '../../../components/Button/Button';
 import Input from '../../../components/Input/Input';
 import { Controller, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { IDBrand } from '../../../utils/types/BrandType';
-import { z } from 'zod';
-import { XPType } from '../../../data/XPType';
-import { generateID } from '../../../utils/function/generateID';
-import dayjs from 'dayjs';
 import Select from '../../../components/Select/Select';
 import ChipSelection from '../../DailyRPGView/components/ChipSelection';
+import {
+    DefaultQuestValues,
+    defaultQuestZodSchema,
+} from '../../../utils/types/FormTypes/DefaultQuestTypes';
 
 interface Props {
     className?: string;
-    onClose?: () => void;
+    onConfirm: (questValues: DefaultQuestValues) => void;
+    onClose: () => void;
+    updateQuest: DefaultQuestValues;
 }
 
-const defaultValuesSchema = z.object({
-    quest: z.string().min(3, 'Quest must be at least 3 characters long'),
-    xpPoints: z.number(),
-    type: z.string().min(3, 'Type must be selected'),
-    level: z.string(),
-});
-
-type DefaultValuesType = {
-    quest: string;
-    xpPoints: number;
-    type: IDBrand;
-    level: 'MIN' | 'MID' | 'MAX';
-};
-
-const defaultValues: DefaultValuesType = {
-    quest: '',
-    xpPoints: 0,
-    type: '' as IDBrand,
-    level: 'MIN',
-};
-
-const UpdateQuestModal: React.FC<Props> = ({ className }) => {
-    const { control, handleSubmit } = useForm<DefaultValuesType>({
-        defaultValues,
-        resolver: zodResolver(defaultValuesSchema),
+const UpdateQuestModal: React.FC<Props> = ({ className, updateQuest, onClose, onConfirm }) => {
+    const { control, handleSubmit } = useForm<DefaultQuestValues>({
+        defaultValues: updateQuest,
+        resolver: zodResolver(defaultQuestZodSchema),
     });
 
-    const onSubmitForm = (data: DefaultValuesType) => {
-        console.log({ data });
+    const onSubmitForm = (data: DefaultQuestValues) => {
+        onConfirm(data);
+        onClose();
     };
     return (
         <div
             className={twMerge(
-                'flex flex-col gap-3 rounded-xl bg-gray-600 p-6 shadow-2xl',
+                'flex flex-col gap-4 rounded-xl bg-gray-900 p-6 shadow-2xl',
                 className
             )}
         >
-            <div>
-                <p className="text-2xl font-semibold">Update Quest</p>
+            <div className="border-b border-gray-700 pb-3">
+                <h2 className="text-2xl font-bold text-white">Add New Day</h2>
             </div>
-            <form
-                className={twMerge('flex flex-col gap-4', className)}
-                onSubmit={handleSubmit(onSubmitForm)}
-            >
+            <form className={twMerge('flex flex-col gap-2', className)}>
                 <div className="flex items-end gap-8">
                     <Controller
                         name="quest"
@@ -73,6 +51,8 @@ const UpdateQuestModal: React.FC<Props> = ({ className }) => {
                             />
                         )}
                     />
+                </div>
+                <div className="flex gap-4">
                     <Controller
                         name="level"
                         control={control}
@@ -81,6 +61,7 @@ const UpdateQuestModal: React.FC<Props> = ({ className }) => {
                                 value={value}
                                 onChange={onChange}
                                 label="Level"
+                                className="flex-grow"
                                 options={[
                                     { value: 'MIN', label: 'MIN' },
                                     { value: 'MID', label: 'MID' },
@@ -105,7 +86,7 @@ const UpdateQuestModal: React.FC<Props> = ({ className }) => {
                         )}
                     />
                 </div>
-                <div className="flex justify-between">
+                <div className="mt-2 flex justify-between">
                     <Controller
                         name="type"
                         control={control}
@@ -113,10 +94,22 @@ const UpdateQuestModal: React.FC<Props> = ({ className }) => {
                             <ChipSelection selectedChip={{ state: value, setState: onChange }} />
                         )}
                     />
-                    <Button text="Add" type="submit" className="w-56 p-1" />
                 </div>
             </form>
-            <Button text="Close" variant="blue" />
+            <div
+                className={twMerge(
+                    'mt-4 flex justify-between gap-10',
+                    'border-t border-gray-700 pt-4'
+                )}
+            >
+                <Button text="Close" variant="red" className="h-8" onClick={onClose} />
+                <Button
+                    text="Save"
+                    onClick={handleSubmit(onSubmitForm)}
+                    className="h-8"
+                    variant="blue"
+                />
+            </div>
         </div>
     );
 };
