@@ -7,13 +7,13 @@ import ReactDOM from 'react-dom';
 import UpdateQuestModal from '../../view/ModalView/UpdateQuestModal/UpdateQuestModal';
 import { IDBrand } from '../../utils/types/BrandType';
 import { DefaultQuestValues } from '../../utils/types/FormTypes/DefaultQuestTypes';
-import { useMainContext } from '../MainProvider/useMainContext';
+import useData from '../../hooks/useData';
 
 export const ModalProvider: FC<{ children: ReactNode }> = ({ children }) => {
     const [newDateModal, setNewDateModal] = useState<boolean>(false);
     const [confirmModalContent, setConfirmModalContent] = useState<ReactNode | null>(null);
     const [updateQuestModalContent, setUpdateQuestModalContent] = useState<ReactNode | null>(null);
-    const { dayData } = useMainContext();
+    const { dayDataState } = useData();
 
     const showConfirmModal = (onConfirm: () => void, title?: string, message?: string) => {
         const content = (
@@ -35,7 +35,7 @@ export const ModalProvider: FC<{ children: ReactNode }> = ({ children }) => {
         dayID: IDBrand,
         questID: IDBrand
     ) => {
-        const newDayData = dayData.find((dayItem) => dayItem.id === dayID);
+        const newDayData = dayDataState.data?.find((dayItem) => dayItem.id === dayID);
         if (!newDayData) return;
 
         const questData = newDayData.QuestXP.find((questItem) => questItem.id === questID);

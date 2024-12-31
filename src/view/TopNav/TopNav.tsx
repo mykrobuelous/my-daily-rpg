@@ -1,24 +1,24 @@
 import { twMerge } from 'tailwind-merge';
-import { useMainContext } from '../../context/MainProvider/useMainContext';
 import dayjs from 'dayjs';
 import LabelText from '../../components/LabelText/LabelText';
 import { Calendar, ChartLine, ChartNoAxesColumn, FileChartColumn, Trash2 } from 'lucide-react';
 import RPGLevel from './RPGLevel';
 import TopDailyXP from './TopDailyXP';
 import { useModalContext } from '../../context/ModalProvider/useModalContext';
-import { runToast } from '../../lib/ReactHotToast/runToast';
-import CusCheckIcon from '../../lib/ReactHotToast/CusCheckIcon';
+import useMainStore from '../../store/reducer/MainReducer/useMainStore';
+import useData from '../../hooks/useData';
 
 interface Props {
     className?: string;
 }
 
 const TopNav: React.FC<Props> = ({ className }) => {
-    const { selectedDayID, callAPI, route, levelData } = useMainContext();
+    const { selectedDay } = useMainStore();
+    const { levelData } = useData();
     const { showConfirmModal } = useModalContext();
 
-    const totalQuest = selectedDayID.state?.QuestXP.length;
-    const totalXP = selectedDayID.state?.QuestXP.reduce((acc, questItem) => {
+    const totalQuest = selectedDay.get?.QuestXP.length;
+    const totalXP = selectedDay.get?.QuestXP.reduce((acc, questItem) => {
         return acc + questItem.questDetails.points;
     }, 0);
 
@@ -27,7 +27,7 @@ const TopNav: React.FC<Props> = ({ className }) => {
             <div className="flex w-full items-center gap-10 px-6">
                 <LabelText label="Selected Date" Icon={Calendar} className="gap-1">
                     <p className="text-md font-bold">
-                        {dayjs(selectedDayID.state?.date).format('MMMM DD, YYYY')}
+                        {dayjs(selectedDay.get?.date).format('MMMM DD, YYYY')}
                     </p>
                 </LabelText>
                 <LabelText label="Quests" Icon={ChartLine} className="gap-1">
@@ -48,18 +48,18 @@ const TopNav: React.FC<Props> = ({ className }) => {
                     onClick={() => {
                         showConfirmModal(
                             () => {
-                                callAPI({
-                                    call: 'LOCAL/DELETE_DAY',
-                                    params: selectedDayID.state?.id,
-                                });
-                                runToast(
-                                    `${dayjs(selectedDayID.state?.date).format('MMMM DD, YYYY')} has been deleted.`,
-                                    <CusCheckIcon />
-                                );
-                                route.routeHome();
+                                // callAPI({
+                                //     call: 'LOCAL/DELETE_DAY',
+                                //     params: selectedDay.get?.id,
+                                // });
+                                // runToast(
+                                //     `${dayjs(selectedDay.get?.date).format('MMMM DD, YYYY')} has been deleted.`,
+                                //     <CusCheckIcon />
+                                // );
+                                // route.routeHome();
                             },
                             'Delete Day',
-                            `Are you certain you want to proceed with deleting ${dayjs(selectedDayID.state?.date, 'MM.DD.YYYY').format('MMMM DD, YYYY')}? This operation cannot be reversed.`
+                            `Are you certain you want to proceed with deleting ${dayjs(selectedDay.get?.date, 'MM.DD.YYYY').format('MMMM DD, YYYY')}? This operation cannot be reversed.`
                         );
                     }}
                 />

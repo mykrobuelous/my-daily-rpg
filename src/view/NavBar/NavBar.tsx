@@ -3,7 +3,6 @@ import LogoText from '../../components/LogoText/LogoText';
 import { CalendarDays, ChartBarBig, Home } from 'lucide-react';
 import Button from '../../components/Button/Button';
 import NavDateList from './NavDateList';
-import { useMainContext } from '../../context/MainProvider/useMainContext';
 import { useModalContext } from '../../context/ModalProvider/useModalContext';
 
 interface Props {
@@ -11,7 +10,6 @@ interface Props {
 }
 
 const NavBar: React.FC<Props> = ({ className }) => {
-    const { route } = useMainContext();
     const { newDateModal } = useModalContext();
     return (
         <div
@@ -26,7 +24,9 @@ const NavBar: React.FC<Props> = ({ className }) => {
                 Logo={Home}
                 size={'sm'}
                 className="rounded-lg bg-white py-2 pl-4 text-black hover:bg-gray-200"
-                onClick={route.routeHome}
+                onClick={() => {
+                    // route.routeHome;
+                }}
             />
             <NavDateList className="mt-1 overflow-y-scroll" />
             <Button text="New Day" Icon={CalendarDays} onClick={newDateModal.openModal} />

@@ -1,7 +1,7 @@
 import { twMerge } from 'tailwind-merge';
-import { useMainContext } from '../../../context/MainProvider/useMainContext';
 import Chip from '../../../components/Chip/Chip';
 import { IDBrand } from '../../../utils/types/BrandType';
+import useData from '../../../hooks/useData';
 
 interface Props {
     className?: string;
@@ -12,10 +12,10 @@ interface Props {
 }
 
 const ChipSelection: React.FC<Props> = ({ className, selectedChip }) => {
-    const { experienceData } = useMainContext();
+    const { experienceDataState } = useData();
     return (
         <div className={twMerge('flex gap-2', className)}>
-            {experienceData.map((experienceItem) => {
+            {experienceDataState.data?.map((experienceItem) => {
                 return (
                     <Chip
                         key={experienceItem.id}

@@ -1,6 +1,7 @@
 import { Toaster } from 'react-hot-toast';
-import { MainProvider } from '../../context/MainProvider/MainProvider';
 import { ModalProvider } from '../../context/ModalProvider/ModalProvider';
+import { Provider } from 'react-redux';
+import store from '../../store/store';
 
 interface Props {
     children?: React.ReactNode;
@@ -8,12 +9,12 @@ interface Props {
 
 const AppProvider: React.FC<Props> = ({ children }) => {
     return (
-        <MainProvider>
+        <Provider store={store}>
             <ModalProvider>
                 <div className="view-screen bg-gray-800">{children}</div>
                 <Toaster position="top-right" />
             </ModalProvider>
-        </MainProvider>
+        </Provider>
     );
 };
 

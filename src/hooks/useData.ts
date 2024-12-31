@@ -1,18 +1,13 @@
-import { useMemo, useState } from 'react';
-import { mockExperienceData } from '../data/ExperienceData';
-import { createLookup } from '../utils/function/createLookup';
-import useMockAPI from '../api/mockAPI/useMockAPI';
+import { useGetDayDataQuery } from '../api/rtkAPI/dayAPI';
+import { useGetExperienceDataQuery } from '../api/rtkAPI/experienceAPI';
 import useLevel from './useLevel';
 
 const useData = () => {
-    const { data, callAPI } = useMockAPI();
-    const { levelData } = useLevel(data.habitData);
-    const [experienceData] = useState(mockExperienceData);
-    const experienceDataMap = useMemo(() => {
-        return createLookup(experienceData, 'id');
-    }, [experienceData]);
+    const dayDataState = useGetDayDataQuery();
+    const experienceDataState = useGetExperienceDataQuery();
+    const { levelData } = useLevel(dayDataState.data);
 
-    return { dayData: data.habitData, experienceData, experienceDataMap, callAPI, levelData };
+    return { dayDataState, experienceDataState, levelData };
 };
 
 export default useData;

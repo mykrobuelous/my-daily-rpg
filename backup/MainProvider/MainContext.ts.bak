@@ -1,0 +1,22 @@
+import { createContext } from 'react';
+import { DayType } from '../../src/data/DayType';
+import { IDBrand } from '../../src/utils/types/BrandType';
+import { ExperienceType } from '../../src/data/ExperienceType';
+import { CallAPIType } from '../../src/api/mockAPI/mockAPITypes';
+
+export interface MainContextProps {
+    dayData: { data: DayType[]; isLoading: boolean; isSuccess: boolean; isError: boolean };
+    experienceData: ExperienceType[];
+    experienceDataMap: Record<string, ExperienceType>;
+    selectedDay: {
+        get: DayType | undefined;
+        set: (id: IDBrand | undefined) => void;
+    };
+    callAPI: CallAPIType;
+    route: {
+        routeHome: () => void;
+    };
+    levelData: number;
+}
+
+export const MainContext = createContext<MainContextProps | undefined>(undefined);

@@ -37,7 +37,7 @@ export type AddTypeHelper<
     TParams extends ParamsType | undefined = undefined,
 > = {
     call: KCall;
-    body: TBody;
+    body?: TBody;
     params?: TParams;
 };
 

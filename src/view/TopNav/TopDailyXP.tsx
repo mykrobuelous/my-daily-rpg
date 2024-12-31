@@ -1,16 +1,20 @@
 import { twMerge } from 'tailwind-merge';
-import { useMainContext } from '../../context/MainProvider/useMainContext';
 import ChipPoints from '../../components/Chip/ChipPoints';
 import { v4 as uuidv4 } from 'uuid';
+import useData from '../../hooks/useData';
+import useMainStore from '../../store/reducer/MainReducer/useMainStore';
 interface Props {
     className?: string;
 }
 
 const TopDailyXP: React.FC<Props> = ({ className }) => {
-    const { experienceData, selectedDayID } = useMainContext();
+    const { experienceDataState } = useData();
+    const { selectedDay } = useMainStore();
 
-    const expTotalPoints = experienceData.map((expItem) => {
-        const xpPoints = selectedDayID.state?.QuestXP.reduce((acc, questItem) => {
+    if (!experienceDataState.data || !selectedDay.get) return null;
+
+    const expTotalPoints = experienceDataState.data.map((expItem) => {
+        const xpPoints = selectedDay.get?.QuestXP.reduce((acc, questItem) => {
             if (expItem.id === questItem.experienceID) {
                 return acc + questItem.questDetails.points;
             }

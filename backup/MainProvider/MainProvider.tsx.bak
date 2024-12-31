@@ -1,0 +1,31 @@
+import { FC, ReactNode } from 'react';
+import useData from '../../src/hooks/useData';
+import { MainContext } from './MainContext';
+import useMainStore from '../../src/store/reducer/MainReducer/useMainStore';
+import { useGetDayDataQuery } from '../../src/api/rtkAPI/dayAPI';
+
+export const MainProvider: FC<{ children: ReactNode }> = ({ children }) => {
+    const { experienceData, experienceDataMap, callAPI, levelData } = useData();
+    const { data: dayData, isSuccess, isError, isLoading } = useGetDayDataQuery();
+    const { selectedDay } = useMainStore(dayData);
+
+    const routeHome = () => {
+        selectedDay.set(undefined);
+    };
+
+    return (
+        <MainContext.Provider
+            value={{
+                dayData,
+                experienceData,
+                experienceDataMap,
+                selectedDay: { get: selectedDay.get, set: selectedDay.set },
+                route: { routeHome },
+                callAPI,
+                levelData,
+            }}
+        >
+            {children}
+        </MainContext.Provider>
+    );
+};

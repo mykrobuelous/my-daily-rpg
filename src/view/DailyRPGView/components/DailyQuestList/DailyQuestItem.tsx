@@ -15,9 +15,11 @@ interface Props {
 }
 
 const DailyQuestItem: React.FC<Props> = ({ className, questItem, onTrash, onClick }) => {
-    const { experienceDataMap } = useData();
+    const { experienceDataState } = useData();
 
-    const colorMap = experienceDataMap[questItem.experienceID].color;
+    const colorMap = experienceDataState.data?.find(
+        (experienceItem) => experienceItem.id === questItem.experienceID
+    )?.color || { text: '', gradient: '', xp: '' };
 
     return (
         <div

@@ -1,6 +1,5 @@
 import { useCallback, useState } from 'react';
 import { twMerge } from 'tailwind-merge';
-import { useMainContext } from '../../../context/MainProvider/useMainContext';
 import { getDisabledDate } from '../../TestView/utils/getDisabledDates';
 import Calendar from 'react-calendar';
 import dayjs from 'dayjs';
@@ -8,6 +7,8 @@ import Button from '../../../components/Button/Button';
 import { generateID } from '../../../utils/function/generateID';
 import { runToast } from '../../../lib/ReactHotToast/runToast';
 import CusCheckIcon from '../../../lib/ReactHotToast/CusCheckIcon';
+import useData from '../../../hooks/useData';
+import useMainStore from '../../../store/reducer/MainReducer/useMainStore';
 
 interface Props {
     className?: string;
@@ -19,9 +20,12 @@ type Value = ValuePiece | [ValuePiece, ValuePiece];
 
 const NewDateModal: React.FC<Props> = ({ className, onClose }) => {
     const [date, setDate] = useState<Value>(null);
-    const { dayData, callAPI, selectedDayID } = useMainContext();
+    const { dayDataState } = useData();
+    const { selectedDay } = useMainStore();
 
-    const disabledDates = getDisabledDate(dayData, 'MM.DD.YYYY', 'date');
+    
+
+    const disabledDates = getDisabledDate(dayDataState.data || [], 'MM.DD.YYYY', 'date');
 
     const disableSpecificDates = useCallback(
         ({ date, view }: { date: Date; view: string }) => {
@@ -62,15 +66,15 @@ const NewDateModal: React.FC<Props> = ({ className, onClose }) => {
                     onClick={() => {
                         if (!dateValue) return;
                         const newID = generateID();
-                        callAPI({
-                            call: 'LOCAL/ADD_DAY',
-                            body: {
-                                id: newID,
-                                date: dateValue,
-                            },
-                        });
+                        // callAPI({
+                        //     call: 'LOCAL/ADD_DAY',
+                        //     body: {
+                        //         id: newID,
+                        //         date: dateValue,
+                        //     },
+                        // });
                         setDate(null);
-                        selectedDayID.setState(newID);
+                        selectedDay.set(newID);
                         runToast('New day has been added.', <CusCheckIcon />);
                         onClose();
                     }}

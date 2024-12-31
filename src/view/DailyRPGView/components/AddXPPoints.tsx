@@ -6,10 +6,9 @@ import { IDBrand } from '../../../utils/types/BrandType';
 import { Controller, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import Select from '../../../components/Select/Select';
-import { XPType } from '../../../data/XPType';
-import dayjs from 'dayjs';
-import { generateID } from '../../../utils/function/generateID';
-import { useMainContext } from '../../../context/MainProvider/useMainContext';
+// import { XPType } from '../../../data/XPType';
+// import dayjs from 'dayjs';
+// import { generateID } from '../../../utils/function/generateID';
 import { runToast } from '../../../lib/ReactHotToast/runToast';
 import CusCheckIcon from '../../../lib/ReactHotToast/CusCheckIcon';
 import {
@@ -17,6 +16,7 @@ import {
     defaultQuestZodSchema,
 } from '../../../utils/types/FormTypes/DefaultQuestTypes';
 import { RefreshCcw } from 'lucide-react';
+// import useMainStore from '../../../store/reducer/MainReducer/useMainStore';
 
 interface Props {
     className?: string;
@@ -30,7 +30,7 @@ const defaultValues: DefaultQuestValues = {
 };
 
 const AddXPPoints: React.FC<Props> = ({ className }) => {
-    const { selectedDayID, callAPI } = useMainContext();
+    // const { selectedDay } = useMainStore();
     const {
         control,
         handleSubmit,
@@ -46,26 +46,27 @@ const AddXPPoints: React.FC<Props> = ({ className }) => {
 
     const isFormChanged = JSON.stringify(fieldValues) !== JSON.stringify(defaultValues);
 
-    const onSubmitForm = (data: DefaultQuestValues) => {
-        const { quest, xpPoints, type, level } = data;
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const onSubmitForm = (_data: DefaultQuestValues) => {
+        // const { quest, xpPoints, type, level } = data;
 
-        const body: XPType = {
-            id: generateID(),
-            experienceID: type,
-            datetimeCreated: dayjs().toString(),
-            questDetails: {
-                quest,
-                points: xpPoints,
-                level,
-            },
-        };
+        // const body: XPType = {
+        //     id: generateID(),
+        //     experienceID: type,
+        //     datetimeCreated: dayjs().toString(),
+        //     questDetails: {
+        //         quest,
+        //         points: xpPoints,
+        //         level,
+        //     },
+        // };
 
         try {
-            callAPI({
-                body,
-                call: 'LOCAL/ADD_QUEST',
-                params: selectedDayID.state?.id,
-            });
+            // callAPI({
+            //     body,
+            //     call: 'LOCAL/ADD_QUEST',
+            //     params: selectedDay.get?.id,
+            // });
             reset();
             runToast('Quest added successfully', <CusCheckIcon />);
         } catch (error) {
