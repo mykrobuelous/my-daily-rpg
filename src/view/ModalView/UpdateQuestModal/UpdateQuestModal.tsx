@@ -46,7 +46,7 @@ const UpdateQuestModal: React.FC<Props> = ({ className, updateQuest, onClose, on
             )}
         >
             <div className="flex items-center justify-between border-b border-gray-700 pb-3">
-                <h2 className="text-2xl font-bold text-white">Add New Day</h2>
+                <h2 className="text-2xl font-bold text-white">Quest Details</h2>
                 <RefreshCcw
                     className={twMerge(
                         'cursor-default text-gray-600',
@@ -124,7 +124,7 @@ const UpdateQuestModal: React.FC<Props> = ({ className, updateQuest, onClose, on
             >
                 <Button text="Close" variant="red" className="h-8" onClick={onClose} />
                 <Button
-                    text="Save"
+                    text="Update"
                     onClick={handleSubmit(onSubmitForm)}
                     className="h-8"
                     variant="blue"

@@ -4,11 +4,11 @@ import { getDisabledDate } from '../../TestView/utils/getDisabledDates';
 import Calendar from 'react-calendar';
 import dayjs from 'dayjs';
 import Button from '../../../components/Button/Button';
-import { generateID } from '../../../utils/function/generateID';
 import { runToast } from '../../../lib/ReactHotToast/runToast';
 import CusCheckIcon from '../../../lib/ReactHotToast/CusCheckIcon';
 import useData from '../../../hooks/useData';
 import useMainStore from '../../../store/reducer/MainReducer/useMainStore';
+import { useAddDayDataMutation } from '../../../api/rtkAPI/dayAPI';
 
 interface Props {
     className?: string;
@@ -22,8 +22,7 @@ const NewDateModal: React.FC<Props> = ({ className, onClose }) => {
     const [date, setDate] = useState<Value>(null);
     const { dayDataState } = useData();
     const { selectedDay } = useMainStore();
-
-    
+    const [addDayData] = useAddDayDataMutation();
 
     const disabledDates = getDisabledDate(dayDataState.data || [], 'MM.DD.YYYY', 'date');
 
@@ -63,19 +62,17 @@ const NewDateModal: React.FC<Props> = ({ className, onClose }) => {
             >
                 <Button onClick={onClose} text="Close" className="h-8" variant="red" />
                 <Button
-                    onClick={() => {
+                    onClick={async () => {
                         if (!dateValue) return;
-                        const newID = generateID();
-                        // callAPI({
-                        //     call: 'LOCAL/ADD_DAY',
-                        //     body: {
-                        //         id: newID,
-                        //         date: dateValue,
-                        //     },
-                        // });
-                        setDate(null);
-                        selectedDay.set(newID);
-                        runToast('New day has been added.', <CusCheckIcon />);
+                        try {
+                            const newDay = await addDayData({ date: dateValue });
+                            setDate(null);
+                            if (!newDay.data) return;
+                            selectedDay.set(newDay.data?.id);
+                            runToast('New day has been added.', <CusCheckIcon />);
+                        } catch (error) {
+                            if (error instanceof Error) console.error(error.message);
+                        }
                         onClose();
                     }}
                     text="Add"

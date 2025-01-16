@@ -7,6 +7,9 @@ import TopDailyXP from './TopDailyXP';
 import { useModalContext } from '../../context/ModalProvider/useModalContext';
 import useMainStore from '../../store/reducer/MainReducer/useMainStore';
 import useData from '../../hooks/useData';
+import { useDeleteDayDataMutation } from '../../api/rtkAPI/dayAPI';
+import { runToast } from '../../lib/ReactHotToast/runToast';
+import CusCheckIcon from '../../lib/ReactHotToast/CusCheckIcon';
 
 interface Props {
     className?: string;
@@ -16,6 +19,7 @@ const TopNav: React.FC<Props> = ({ className }) => {
     const { selectedDay } = useMainStore();
     const { levelData } = useData();
     const { showConfirmModal } = useModalContext();
+    const [deleteDayAPI] = useDeleteDayDataMutation();
 
     const totalQuest = selectedDay.get?.QuestXP.length;
     const totalXP = selectedDay.get?.QuestXP.reduce((acc, questItem) => {
@@ -48,15 +52,17 @@ const TopNav: React.FC<Props> = ({ className }) => {
                     onClick={() => {
                         showConfirmModal(
                             () => {
-                                // callAPI({
-                                //     call: 'LOCAL/DELETE_DAY',
-                                //     params: selectedDay.get?.id,
-                                // });
-                                // runToast(
-                                //     `${dayjs(selectedDay.get?.date).format('MMMM DD, YYYY')} has been deleted.`,
-                                //     <CusCheckIcon />
-                                // );
-                                // route.routeHome();
+                                try {
+                                    if (!selectedDay.get?.id) return;
+                                    deleteDayAPI({ id: selectedDay.get.id });
+                                    runToast(
+                                        `${dayjs(selectedDay.get.date).format('MMM DD, YYYY')} Day succesfully deleted`,
+                                        <CusCheckIcon />
+                                    );
+                                    selectedDay.set(null);
+                                } catch (error) {
+                                    if (error instanceof Error) console.error(error.message);
+                                }
                             },
                             'Delete Day',
                             `Are you certain you want to proceed with deleting ${dayjs(selectedDay.get?.date, 'MM.DD.YYYY').format('MMMM DD, YYYY')}? This operation cannot be reversed.`

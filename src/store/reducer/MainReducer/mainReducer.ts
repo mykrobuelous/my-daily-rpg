@@ -3,18 +3,18 @@ import { RootState } from '../../store';
 import { IDBrand } from '../../../utils/types/BrandType';
 
 interface MainRouteState {
-    selectedDayIDState: IDBrand | undefined;
+    selectedDayIDState: IDBrand | null;
 }
 
 const initialState: MainRouteState = {
-    selectedDayIDState: undefined,
+    selectedDayIDState: null,
 };
 
 const mainReducer = createSlice({
     name: 'main',
     initialState,
     reducers: {
-        setSelectedDayIDAction: (state, action: PayloadAction<IDBrand | undefined>) => {
+        setSelectedDayIDAction: (state, action: PayloadAction<IDBrand | null>) => {
             state.selectedDayIDState = action.payload;
         },
     },

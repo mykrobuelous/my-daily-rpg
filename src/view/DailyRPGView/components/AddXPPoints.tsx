@@ -16,6 +16,8 @@ import {
     defaultQuestZodSchema,
 } from '../../../utils/types/FormTypes/DefaultQuestTypes';
 import { RefreshCcw } from 'lucide-react';
+import { useAddXPDataMutation } from '../../../api/rtkAPI/dayAPI';
+import useMainStore from '../../../store/reducer/MainReducer/useMainStore';
 // import useMainStore from '../../../store/reducer/MainReducer/useMainStore';
 
 interface Props {
@@ -41,32 +43,23 @@ const AddXPPoints: React.FC<Props> = ({ className }) => {
         defaultValues,
         resolver: zodResolver(defaultQuestZodSchema),
     });
+    const [addXPDataAPI] = useAddXPDataMutation();
+    const { selectedDay } = useMainStore();
 
     const fieldValues = watch();
 
     const isFormChanged = JSON.stringify(fieldValues) !== JSON.stringify(defaultValues);
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const onSubmitForm = (_data: DefaultQuestValues) => {
-        // const { quest, xpPoints, type, level } = data;
-
-        // const body: XPType = {
-        //     id: generateID(),
-        //     experienceID: type,
-        //     datetimeCreated: dayjs().toString(),
-        //     questDetails: {
-        //         quest,
-        //         points: xpPoints,
-        //         level,
-        //     },
-        // };
+    const onSubmitForm = (data: DefaultQuestValues) => {
+        const { quest, xpPoints, type, level } = data;
 
         try {
-            // callAPI({
-            //     body,
-            //     call: 'LOCAL/ADD_QUEST',
-            //     params: selectedDay.get?.id,
-            // });
+            if (!selectedDay.get) return;
+            addXPDataAPI({
+                id: selectedDay.get?.id,
+                experienceID: type,
+                questDetails: { quest, points: xpPoints, level },
+            });
             reset();
             runToast('Quest added successfully', <CusCheckIcon />);
         } catch (error) {

@@ -4,6 +4,7 @@ import { CalendarDays, ChartBarBig, Home } from 'lucide-react';
 import Button from '../../components/Button/Button';
 import NavDateList from './NavDateList';
 import { useModalContext } from '../../context/ModalProvider/useModalContext';
+import useMainStore from '../../store/reducer/MainReducer/useMainStore';
 
 interface Props {
     className?: string;
@@ -11,6 +12,7 @@ interface Props {
 
 const NavBar: React.FC<Props> = ({ className }) => {
     const { newDateModal } = useModalContext();
+    const { selectedDay } = useMainStore();
     return (
         <div
             className={twMerge(
@@ -25,7 +27,7 @@ const NavBar: React.FC<Props> = ({ className }) => {
                 size={'sm'}
                 className="rounded-lg bg-white py-2 pl-4 text-black hover:bg-gray-200"
                 onClick={() => {
-                    // route.routeHome;
+                    selectedDay.set(null);
                 }}
             />
             <NavDateList className="mt-1 overflow-y-scroll" />

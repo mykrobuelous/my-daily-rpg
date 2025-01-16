@@ -4,6 +4,7 @@ import { runToast } from '../../../../lib/ReactHotToast/runToast';
 import CusCheckIcon from '../../../../lib/ReactHotToast/CusCheckIcon';
 import { useModalContext } from '../../../../context/ModalProvider/useModalContext';
 import useMainStore from '../../../../store/reducer/MainReducer/useMainStore';
+import { useDeleteXPDataMutation, useUpdateXPDataMutation } from '../../../../api/rtkAPI/dayAPI';
 
 interface Props {
     className?: string;
@@ -12,6 +13,8 @@ interface Props {
 const DailyQuestList: React.FC<Props> = ({ className }) => {
     const { selectedDay } = useMainStore();
     const { showConfirmModal, showUpdateQuestModal } = useModalContext();
+    const [deleteXPAPI] = useDeleteXPDataMutation();
+    const [updateXPAPI] = useUpdateXPDataMutation();
 
     if (!selectedDay.get) return;
 
@@ -31,10 +34,7 @@ const DailyQuestList: React.FC<Props> = ({ className }) => {
                         onTrash={() => {
                             showConfirmModal(
                                 () => {
-                                    // callAPI({
-                                    //     call: 'LOCAL/DELETE_QUEST',
-                                    //     body: { habitID: selectedDay.id, questID: questItem.id },
-                                    // });
+                                    deleteXPAPI({ id: questItem.id, dayID: selectedDayID });
                                     runToast('Quest has been deleted.', <CusCheckIcon />);
                                 },
                                 'Delete Quest',
@@ -43,21 +43,22 @@ const DailyQuestList: React.FC<Props> = ({ className }) => {
                         }}
                         onClick={() => {
                             showUpdateQuestModal(
-                                // eslint-disable-next-line @typescript-eslint/no-unused-vars
-                                (_data) => {
-                                    // callAPI({
-                                    //     call: 'LOCAL/UPDATE_QUEST',
-                                    //     body: {
-                                    //         ...questItem,
-                                    //         experienceID: data.type,
-                                    //         questDetails: {
-                                    //             quest: data.quest,
-                                    //             points: data.xpPoints,
-                                    //             level: data.level,
-                                    //         },
-                                    //     },
-                                    //     params: selectedDay.id,
-                                    // });
+                                (data) => {
+                                    try {
+                                        updateXPAPI({
+                                            id: questItem.id,
+                                            dayID: selectedDayID,
+                                            experienceID: data.type,
+                                            questDetails: {
+                                                quest: data.quest,
+                                                points: data.xpPoints,
+                                                level: data.level,
+                                            },
+                                        });
+                                    } catch (error) {
+                                        if (error instanceof Error) console.error(error.message);
+                                    }
+
                                     runToast('Quest has been updated.', <CusCheckIcon />);
                                 },
                                 selectedDayID,

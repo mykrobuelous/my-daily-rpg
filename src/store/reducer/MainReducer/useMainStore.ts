@@ -10,8 +10,8 @@ const useMainStore = () => {
 
     const selectedDay = dayDataState.data?.find((dayItem) => dayItem.id === selectedDayIDState);
 
-    const setSelectedDay = (id: IDBrand | undefined) => {
-        dispatch(setSelectedDayIDAction(id));
+    const setSelectedDay = (id: IDBrand | null) => {
+        dispatch(setSelectedDayIDAction(id || null));
     };
 
     return {
