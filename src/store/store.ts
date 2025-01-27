@@ -1,17 +1,14 @@
 // store.ts
 import { configureStore } from '@reduxjs/toolkit';
 import mainReducer from './reducer/MainReducer/mainReducer';
-import { dayAPI } from '../api/rtkAPI/dayAPI';
-import { experienceAPI } from '../api/rtkAPI/experienceAPI';
+import { baseAPI } from '../api/rtkAPI/baseAPI';
 
 const store = configureStore({
     reducer: {
         main: mainReducer,
-        [dayAPI.reducerPath]: dayAPI.reducer,
-        [experienceAPI.reducerPath]: experienceAPI.reducer,
+        [baseAPI.reducerPath]: baseAPI.reducer,
     },
-    middleware: (getDefaultMiddleware) =>
-        getDefaultMiddleware().concat(dayAPI.middleware, experienceAPI.middleware),
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(baseAPI.middleware),
 });
 
 export type RootState = ReturnType<typeof store.getState>;

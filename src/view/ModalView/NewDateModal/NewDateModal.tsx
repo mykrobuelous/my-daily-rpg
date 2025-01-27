@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react';
 import { twMerge } from 'tailwind-merge';
-import { getDisabledDate } from '../../TestView/utils/getDisabledDates';
+import { getDisabledDate } from '../../../utils/function/getDisabledDates';
 import Calendar from 'react-calendar';
 import dayjs from 'dayjs';
 import Button from '../../../components/Button/Button';

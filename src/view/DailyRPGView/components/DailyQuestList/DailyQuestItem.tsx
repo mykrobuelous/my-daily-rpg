@@ -32,7 +32,7 @@ const DailyQuestItem: React.FC<Props> = ({ className, questItem, onTrash, onClic
             )}
             onClick={onClick}
         >
-            <div className="flex w-full items-start justify-between">
+            <div className="flex w-full items-center justify-between">
                 <div className="flex items-center gap-3">
                     <div className="flex w-80 items-center gap-2">
                         <CircleCheckBig className={twMerge('mt-1', colorMap.text)} size={32} />
@@ -66,7 +66,7 @@ const DailyQuestItem: React.FC<Props> = ({ className, questItem, onTrash, onClic
                     />
                     <button className="rounded-lg p-1.5 opacity-0 transition-all duration-200 group-hover:opacity-100">
                         <Trash2
-                            size={18}
+                            size={20}
                             className="text-gray-400 transition-colors hover:text-red-500"
                             onClick={(e) => {
                                 e.stopPropagation();

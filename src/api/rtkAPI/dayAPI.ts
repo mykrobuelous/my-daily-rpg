@@ -1,7 +1,8 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { DayType } from '../../data/DayType';
-import { IDBrand } from '../../utils/types/BrandType';
 import { LevelDataType } from '../../data/XPData';
+import { IDBrand } from '../../utils/types/BrandType';
+import { ResponseType } from '../../utils/types/typeConfigs';
+import { baseAPI } from './baseAPI';
 
 type AddXPDataType = {
     id: IDBrand;
@@ -13,33 +14,44 @@ type AddXPDataType = {
     };
 };
 
-export const dayAPI = createApi({
-    reducerPath: 'dayAPI',
-    baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:3000/day' }),
-    tagTypes: ['Day'],
+const BASE_URL = '/day';
+
+const dayAPI = baseAPI.injectEndpoints({
     endpoints: (builder) => ({
         getDayData: builder.query<DayType[], void>({
-            query: () => '/',
+            query: () => BASE_URL,
             providesTags: ['Day'],
+            transformResponse: (response: ResponseType<DayType[]>) => {
+                if (response.success) {
+                    return response.data;
+                }
+                return [];
+            },
         }),
-        addDayData: builder.mutation<DayType, { date: Date }>({
+        addDayData: builder.mutation<DayType | null, { date: Date }>({
             query: (body) => ({
-                url: '/',
+                url: BASE_URL,
                 method: 'POST',
                 body,
             }),
             invalidatesTags: ['Day'],
+            transformResponse: (response: ResponseType<DayType>) => {
+                if (response.success) {
+                    return response.data;
+                }
+                return null;
+            },
         }),
         deleteDayData: builder.mutation<void, { id: IDBrand }>({
             query: (body) => ({
-                url: `/${body.id}`,
+                url: `${BASE_URL}/${body.id}`,
                 method: 'DELETE',
             }),
-            invalidatesTags: ['Day'],
+            invalidatesTags: ['Day', 'Experience'],
         }),
         addXPData: builder.mutation<void, AddXPDataType>({
             query: (body) => ({
-                url: `/xp`,
+                url: `${BASE_URL}/xp`,
                 method: 'POST',
                 body: {
                     dayID: body.id,
@@ -47,11 +59,11 @@ export const dayAPI = createApi({
                     questDetails: body.questDetails,
                 },
             }),
-            invalidatesTags: ['Day'],
+            invalidatesTags: ['Day', 'Experience'],
         }),
         updateXPData: builder.mutation<void, AddXPDataType & { dayID: IDBrand }>({
             query: (body) => ({
-                url: `/xp/${body.id}`,
+                url: `${BASE_URL}/xp/${body.id}`,
                 method: 'PUT',
                 body: {
                     dayID: body.dayID,
@@ -59,19 +71,20 @@ export const dayAPI = createApi({
                     questDetails: body.questDetails,
                 },
             }),
-            invalidatesTags: ['Day'],
+            invalidatesTags: ['Day', 'Experience'],
         }),
         deleteXPData: builder.mutation<void, { id: IDBrand; dayID: IDBrand }>({
             query: (body) => ({
-                url: `/xp/${body.id}`,
+                url: `${BASE_URL}/xp/${body.id}`,
                 method: 'DELETE',
                 body: {
                     dayID: body.dayID,
                 },
             }),
-            invalidatesTags: ['Day'],
+            invalidatesTags: ['Day', 'Experience'],
         }),
     }),
+    overrideExisting: false,
 });
 
 export const {

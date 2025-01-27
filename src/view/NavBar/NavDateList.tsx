@@ -27,7 +27,7 @@ const NavDateList: React.FC<Props> = ({ className }) => {
                     <LogoText
                         size={'xs'}
                         key={dayItem.id}
-                        text={dayjs(dayItem.date, 'MM.DD.YYYY').format('MMMM D, YYYY')}
+                        text={`${dayjs(dayItem.date, 'MM.DD.YYYY').format('MMM D, YYYY')} (${dayItem.QuestXP.length})`}
                         className={twMerge(
                             'cursor-pointer gap-2 p-2 pl-4 transition-all duration-200',
                             'hover:translate-x-1 hover:bg-gray-700/50',

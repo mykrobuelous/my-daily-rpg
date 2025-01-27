@@ -15,4 +15,5 @@ export type ExperienceType = {
     color: ExpColorType;
     description: string;
     guideQuestion: string;
+    totalPoints: number;
 };
