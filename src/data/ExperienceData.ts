@@ -15,6 +15,7 @@ export const mockExperienceData: ExperienceType[] = [
         },
         description: 'Habits that include anything that involves health',
         guideQuestion: 'Does this habit improve your health, hygiene, or physical strength?',
+        totalPoints: 0,
     },
     {
         id: 'ABC02' as IDBrand,
@@ -30,6 +31,7 @@ export const mockExperienceData: ExperienceType[] = [
         description: 'Habits that include anything that involves mental health and journaling',
         guideQuestion:
             'Does this habit improve your mental health, mindfulness, or emotional well-being?',
+        totalPoints: 0,
     },
     {
         id: 'ABC03' as IDBrand,
@@ -45,10 +47,11 @@ export const mockExperienceData: ExperienceType[] = [
         description: 'Habits that include anything that involves career, learning, and money',
         guideQuestion:
             'Does this habit improve your professional skills, knowledge, or financial management?',
+        totalPoints: 0,
     },
     {
         id: 'ABC04' as IDBrand,
-        experience: 'Spiritual Connection',
+        experience: 'Spiritual',
         ABV: 'SPR',
         color: {
             text: 'text-cyan-500',
@@ -60,5 +63,6 @@ export const mockExperienceData: ExperienceType[] = [
         description:
             'Habits that include anything that involves faith, prayer, and connecting with a sense of purpose',
         guideQuestion: 'Does this habit enhance your spiritual well-being or sense of purpose?',
+        totalPoints: 0,
     },
 ];

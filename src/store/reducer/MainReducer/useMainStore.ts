@@ -1,10 +1,11 @@
 import useData from '../../../hooks/useData';
 import { IDBrand } from '../../../utils/types/BrandType';
 import { useAppDispatch, useAppSelector } from '../../reduxhooks';
-import { mainState, setSelectedDayIDAction } from './mainReducer';
+import { mainState, setRouteAction, setSelectedDayIDAction } from './mainReducer';
+import { OtherRouteType } from './mainReducerConfigs';
 
 const useMainStore = () => {
-    const { selectedDayIDState } = useAppSelector(mainState);
+    const { selectedDayIDState, route } = useAppSelector(mainState);
     const dispatch = useAppDispatch();
     const { dayDataState } = useData();
 
@@ -14,10 +15,18 @@ const useMainStore = () => {
         dispatch(setSelectedDayIDAction(id || null));
     };
 
+    const setRoute = (route: OtherRouteType) => {
+        dispatch(setRouteAction(route));
+    };
+
     return {
         selectedDay: {
             get: selectedDay,
             set: setSelectedDay,
+        },
+        route: {
+            set: setRoute,
+            get: route,
         },
     };
 };

@@ -1,20 +1,34 @@
-import { useMemo } from 'react';
-import { DayType } from '../data/DayType';
 import { calculateLevel } from '../utils/function/calculateLevel';
+import useData from './useData';
 
-const useLevel = (dayData: DayType[] | undefined) => {
-    const levelData = useMemo(() => {
-        if (!dayData) return 0;
-        const totalXPPoints = dayData.reduce((acc, dayItem) => {
-            const totalDayXPPoints = dayItem.QuestXP.reduce((acc, questItem) => {
-                return acc + questItem.questDetails.points;
-            }, 0);
-            return acc + totalDayXPPoints;
-        }, 0);
-        return calculateLevel(totalXPPoints);
-    }, [dayData]);
+export type LevelDetailsType = {
+    level: number;
+    currentLevelXP: number;
+    totalXPforLevel: number;
+    nextLevelXP: number;
+};
 
-    return { levelData };
+const useLevel = () => {
+    const { experienceDataState } = useData();
+
+    const totalPoints = experienceDataState.data?.reduce((acc, expItem) => {
+        return acc + expItem.totalPoints;
+    }, 0);
+
+    const { level, currentLevelXP, nextLevelXP, totalXPforLevel } = calculateLevel(
+        totalPoints || 0
+    );
+
+    return {
+        totalPoints,
+        levelDetails: {
+            level,
+            currentLevelXP,
+            nextLevelXP,
+            totalXPforLevel,
+        },
+        experienceData: experienceDataState.data,
+    };
 };
 
 export default useLevel;

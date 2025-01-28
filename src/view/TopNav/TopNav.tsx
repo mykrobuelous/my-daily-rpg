@@ -6,10 +6,9 @@ import RPGLevel from './RPGLevel';
 import TopDailyXP from './TopDailyXP';
 import { useModalContext } from '../../context/ModalProvider/useModalContext';
 import useMainStore from '../../store/reducer/MainReducer/useMainStore';
-import useData from '../../hooks/useData';
-import { useDeleteDayDataMutation } from '../../api/rtkAPI/dayAPI';
 import { runToast } from '../../lib/ReactHotToast/runToast';
 import CusCheckIcon from '../../lib/ReactHotToast/CusCheckIcon';
+import { useDeleteDayDataMutation } from '../../api/rtkAPI/dayAPI';
 
 interface Props {
     className?: string;
@@ -17,7 +16,6 @@ interface Props {
 
 const TopNav: React.FC<Props> = ({ className }) => {
     const { selectedDay } = useMainStore();
-    const { levelData } = useData();
     const { showConfirmModal } = useModalContext();
     const [deleteDayAPI] = useDeleteDayDataMutation();
 
@@ -71,7 +69,7 @@ const TopNav: React.FC<Props> = ({ className }) => {
                 />
             </div>
             <div className="ml-auto flex h-full items-center gap-4 border-l border-gray-600 px-4">
-                <RPGLevel level={levelData} />
+                <RPGLevel level={12} />
             </div>
         </div>
     );

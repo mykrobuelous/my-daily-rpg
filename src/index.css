@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Radio+Canada+Big:ital,wght@0,400..700;1,400..700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -28,5 +30,14 @@
 
     .box-center {
         @apply box flex-center;
+    }
+
+    .font-radio {
+        font-family: 'Radio Canada Big', serif;
+    }
+
+    .card-glossy {
+        @apply border border-white/10 bg-black/30 shadow-lg backdrop-blur-sm before:absolute before:inset-0 before:rounded-lg before:bg-gradient-to-t before:from-white/10 before:to-transparent;
+        @apply duration-100 ease-in hover:scale-[1.01];
     }
 }
