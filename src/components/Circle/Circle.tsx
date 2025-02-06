@@ -1,51 +1,26 @@
 import { twMerge } from 'tailwind-merge';
-
-type CircleSizeType = 'xs' | 'sm' | 'md' | 'lg';
+import { fixNumber } from '../../utils/function/fixNumber';
+import { circleSizeConfigstwClass, CircleSizeType } from './circleConfigtypes';
 
 interface Props {
     className?: string;
     title?: string;
     points: number;
     size?: CircleSizeType;
-    borderColortwClass?: string;
-    textColortwClass?: string;
+    bordertwClass?: string;
+    texttwClass?: string;
+    labeltwClass?: string;
     labelLocation?: 'inside' | 'bottom';
 }
-
-const circleSizeConfigstwClass = {
-    xs: {
-        size: 'h-14 w-14',
-        textSize: 'text-md',
-        labelSize: 'text-[0.60rem]',
-        border: 'border-4',
-    },
-    sm: {
-        size: 'h-24 w-24',
-        textSize: 'text-4xl',
-        labelSize: 'text-[0.65rem]',
-        border: 'border-4',
-    },
-    md: {
-        size: 'h-28 w-28',
-        textSize: 'text-4xl',
-        labelSize: 'text-[0.70rem]',
-        border: 'border-4',
-    },
-    lg: {
-        size: 'h-32 w-32',
-        textSize: 'text-5xl',
-        labelSize: 'text-[0.80rem]',
-        border: 'border-4',
-    },
-};
 
 const Circle: React.FC<Props> = ({
     className,
     title,
     points,
     size = 'md',
-    borderColortwClass,
-    textColortwClass,
+    bordertwClass,
+    texttwClass,
+    labeltwClass,
     labelLocation = 'inside',
 }) => {
     const { size: circleSize, textSize, labelSize, border } = circleSizeConfigstwClass[size];
@@ -56,16 +31,19 @@ const Circle: React.FC<Props> = ({
                 className={twMerge(
                     'flex-center flex-col rounded-full border-white',
                     border,
-                    borderColortwClass,
+                    bordertwClass,
                     circleSize
                 )}
             >
-                <p className={twMerge('font-semibold', textColortwClass, textSize)}>{points}</p>
+                <p className={twMerge('font-semibold', texttwClass, textSize)}>
+                    {fixNumber(points)}
+                </p>
                 {title && labelLocation === 'inside' && (
                     <p
                         className={twMerge(
                             'w-16 text-center font-medium leading-tight text-gray-300',
-                            labelSize
+                            labelSize,
+                            labeltwClass
                         )}
                     >
                         {title}
@@ -76,7 +54,8 @@ const Circle: React.FC<Props> = ({
                 <p
                     className={twMerge(
                         'w-16 text-center font-bold leading-tight text-gray-300',
-                        labelSize
+                        labelSize,
+                        labeltwClass
                     )}
                 >
                     {title}

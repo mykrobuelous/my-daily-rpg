@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { mockDayData } from '../../data/DayData';
 import { BodyType } from './mockAPITypes';
-import { ErrorAPI } from '../utils/ErrorAPI';
-import { assertNotUndefined } from '../utils/assertNotUndefined';
+import { ErrorAPI } from './utils/ErrorAPI';
+import { assertNotUndefined } from './utils/assertNotUndefined';
 import { cleanError } from '../../utils/function/cleanError';
 import dayjs from 'dayjs';
 

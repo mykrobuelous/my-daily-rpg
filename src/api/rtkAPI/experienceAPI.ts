@@ -1,7 +1,6 @@
-import { ExperienceType } from '../../data/ExperienceType';
-import { IDBrand } from '../../utils/types/BrandType';
-import { ResponseType } from '../../utils/types/typeConfigs';
 import { baseAPI } from './baseAPI';
+import { ResponseAPIType } from './api.types';
+import { ExperienceType } from '@/types/datatypes/experience.types';
 
 const BASE_URL = '/experience';
 
@@ -10,16 +9,7 @@ const experienceAPI = baseAPI.injectEndpoints({
         getExperienceData: builder.query<ExperienceType[], void>({
             query: () => BASE_URL,
             providesTags: ['Experience'],
-            transformResponse: (response: ResponseType<ExperienceType[]>) => {
-                if (response.success) {
-                    return response.data;
-                }
-                return [];
-            },
-        }),
-        refreshExperiencePoint: builder.mutation<{ id: IDBrand; points: number }[], void>({
-            query: () => `${BASE_URL}/refresh-points`,
-            transformResponse: (response: ResponseType<{ id: IDBrand; points: number }[]>) => {
+            transformResponse: (response: ResponseAPIType<ExperienceType[]>) => {
                 if (response.success) {
                     return response.data;
                 }
@@ -29,4 +19,4 @@ const experienceAPI = baseAPI.injectEndpoints({
     }),
 });
 
-export const { useGetExperienceDataQuery, useRefreshExperiencePointMutation } = experienceAPI;
+export const { useGetExperienceDataQuery } = experienceAPI;

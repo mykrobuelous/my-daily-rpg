@@ -1,4 +1,4 @@
-import { cleanError } from '../../utils/function/cleanError';
+import { cleanError } from '../../../utils/function/cleanError';
 import { ErrorAPI } from './ErrorAPI';
 
 function assertNotUndefined<T>(type: string, value: T | undefined): asserts value is T {

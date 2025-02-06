@@ -1,10 +1,10 @@
 import { twMerge } from 'tailwind-merge';
-import LogoText from '../../components/LogoText/LogoText';
 import dayjs from 'dayjs';
 import { Calendar } from 'lucide-react';
-import useData from '../../hooks/useData';
-import useMainStore from '../../store/reducer/MainReducer/useMainStore';
-import { DayType } from '../../data/DayType';
+import useData from '@/hooks/useData';
+import useMainStore from '@/store/reducer/MainReducer/useMainStore';
+import { DayType } from '@/types/datatypes/day.types';
+import LogoText from '@/components/LogoText/LogoText';
 
 interface Props {
     className?: string;
@@ -12,17 +12,18 @@ interface Props {
 
 const NavDateList: React.FC<Props> = ({ className }) => {
     const { dayDataState } = useData();
+
     const { selectedDay } = useMainStore();
 
     if (!dayDataState.data) return null;
 
-    const newDayData: DayType[] = [...dayDataState.data].sort((a, b) =>
+    const formattedDayData: DayType[] = [...dayDataState.data].sort((a, b) =>
         dayjs(b.date, 'MM.DD.YYYY').diff(dayjs(a.date, 'MM.DD.YYYY'))
     );
 
     return (
         <div className={twMerge('flex h-full flex-col gap-1', className)}>
-            {newDayData.map((dayItem) => {
+            {formattedDayData.map((dayItem) => {
                 return (
                     <LogoText
                         size={'xs'}

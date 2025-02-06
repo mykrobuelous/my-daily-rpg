@@ -5,17 +5,15 @@ import { Controller, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import Select from '../../../components/Select/Select';
 import ChipSelection from '../../DailyRPGView/components/ChipSelection';
-import {
-    DefaultQuestValues,
-    defaultQuestZodSchema,
-} from '../../../utils/types/FormTypes/DefaultQuestTypes';
+
 import { RefreshCcw } from 'lucide-react';
+import { defaultQuestZodSchema, QuestFormValuesType } from '@/types/formtypes/questForm.types';
 
 interface Props {
     className?: string;
-    onConfirm: (questValues: DefaultQuestValues) => void;
+    onConfirm: (questValues: QuestFormValuesType) => void;
     onClose: () => void;
-    updateQuest: DefaultQuestValues;
+    updateQuest: QuestFormValuesType;
 }
 
 const UpdateQuestModal: React.FC<Props> = ({ className, updateQuest, onClose, onConfirm }) => {
@@ -25,7 +23,7 @@ const UpdateQuestModal: React.FC<Props> = ({ className, updateQuest, onClose, on
         formState: { isValid },
         watch,
         reset,
-    } = useForm<DefaultQuestValues>({
+    } = useForm<QuestFormValuesType>({
         defaultValues: updateQuest,
         resolver: zodResolver(defaultQuestZodSchema),
     });
@@ -34,7 +32,7 @@ const UpdateQuestModal: React.FC<Props> = ({ className, updateQuest, onClose, on
 
     const isFormChanged = JSON.stringify(fieldValues) !== JSON.stringify(updateQuest);
 
-    const onSubmitForm = (data: DefaultQuestValues) => {
+    const onSubmitForm = (data: QuestFormValuesType) => {
         onConfirm(data);
         onClose();
     };

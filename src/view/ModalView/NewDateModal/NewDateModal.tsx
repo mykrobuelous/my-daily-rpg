@@ -1,14 +1,14 @@
 import { useCallback, useState } from 'react';
 import { twMerge } from 'tailwind-merge';
-import { getDisabledDate } from '../../../utils/function/getDisabledDates';
 import Calendar from 'react-calendar';
 import dayjs from 'dayjs';
-import Button from '../../../components/Button/Button';
-import { runToast } from '../../../lib/ReactHotToast/runToast';
-import CusCheckIcon from '../../../lib/ReactHotToast/CusCheckIcon';
-import useData from '../../../hooks/useData';
-import useMainStore from '../../../store/reducer/MainReducer/useMainStore';
-import { useAddDayDataMutation } from '../../../api/rtkAPI/dayAPI';
+import useData from '@/hooks/useData';
+import useMainStore from '@/store/reducer/MainReducer/useMainStore';
+import { useAddDayDataMutation } from '@/api/rtkAPI/dayAPI';
+import { getDisabledDate } from '@/utils/function/getDisabledDates';
+import Button from '@/components/Button/Button';
+import { runToast } from '@/lib/ReactHotToast/runToast';
+import CusCheckIcon from '@/lib/ReactHotToast/CusCheckIcon';
 
 interface Props {
     className?: string;

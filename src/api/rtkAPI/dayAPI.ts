@@ -1,18 +1,7 @@
-import { DayType } from '../../data/DayType';
-import { LevelDataType } from '../../data/XPData';
-import { IDBrand } from '../../utils/types/BrandType';
-import { ResponseType } from '../../utils/types/typeConfigs';
+import { IDBrand } from '@/types/brand.types';
 import { baseAPI } from './baseAPI';
-
-type AddXPDataType = {
-    id: IDBrand;
-    experienceID: IDBrand;
-    questDetails: {
-        quest: string;
-        points: number;
-        level: LevelDataType;
-    };
-};
+import { AddXPDataAPIType, ResponseAPIType } from './api.types';
+import { DayType } from '@/types/datatypes/day.types';
 
 const BASE_URL = '/day';
 
@@ -21,7 +10,7 @@ const dayAPI = baseAPI.injectEndpoints({
         getDayData: builder.query<DayType[], void>({
             query: () => BASE_URL,
             providesTags: ['Day'],
-            transformResponse: (response: ResponseType<DayType[]>) => {
+            transformResponse: (response: ResponseAPIType<DayType[]>) => {
                 if (response.success) {
                     return response.data;
                 }
@@ -34,8 +23,8 @@ const dayAPI = baseAPI.injectEndpoints({
                 method: 'POST',
                 body,
             }),
-            invalidatesTags: ['Day'],
-            transformResponse: (response: ResponseType<DayType>) => {
+            invalidatesTags: ['Day', 'Stats'],
+            transformResponse: (response: ResponseAPIType<DayType>) => {
                 if (response.success) {
                     return response.data;
                 }
@@ -47,9 +36,9 @@ const dayAPI = baseAPI.injectEndpoints({
                 url: `${BASE_URL}/${body.id}`,
                 method: 'DELETE',
             }),
-            invalidatesTags: ['Day', 'Experience'],
+            invalidatesTags: ['Day', 'Stats'],
         }),
-        addXPData: builder.mutation<void, AddXPDataType>({
+        addXPData: builder.mutation<void, AddXPDataAPIType>({
             query: (body) => ({
                 url: `${BASE_URL}/xp`,
                 method: 'POST',
@@ -59,9 +48,9 @@ const dayAPI = baseAPI.injectEndpoints({
                     questDetails: body.questDetails,
                 },
             }),
-            invalidatesTags: ['Day', 'Experience'],
+            invalidatesTags: ['Day', 'Stats'],
         }),
-        updateXPData: builder.mutation<void, AddXPDataType & { dayID: IDBrand }>({
+        updateXPData: builder.mutation<void, AddXPDataAPIType & { dayID: IDBrand }>({
             query: (body) => ({
                 url: `${BASE_URL}/xp/${body.id}`,
                 method: 'PUT',
@@ -71,7 +60,7 @@ const dayAPI = baseAPI.injectEndpoints({
                     questDetails: body.questDetails,
                 },
             }),
-            invalidatesTags: ['Day', 'Experience'],
+            invalidatesTags: ['Day', 'Stats'],
         }),
         deleteXPData: builder.mutation<void, { id: IDBrand; dayID: IDBrand }>({
             query: (body) => ({
@@ -81,7 +70,7 @@ const dayAPI = baseAPI.injectEndpoints({
                     dayID: body.dayID,
                 },
             }),
-            invalidatesTags: ['Day', 'Experience'],
+            invalidatesTags: ['Day', 'Stats'],
         }),
     }),
     overrideExisting: false,

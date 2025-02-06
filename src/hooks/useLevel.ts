@@ -1,33 +1,53 @@
-import { calculateLevel } from '../utils/function/calculateLevel';
+import { XPPointsType } from '@/types/datatypes/stats.type';
 import useData from './useData';
+import { ExperienceType } from '@/types/datatypes/experience.types';
+import { defaultTotalStats, defaultXPPoints, useGetStatsDataQuery } from '@/api/rtkAPI/statsAPI';
+import useMainStore from '@/store/reducer/MainReducer/useMainStore';
+import { calculateLevel } from '@/utils/function/calculateLevel';
 
-export type LevelDetailsType = {
-    level: number;
-    currentLevelXP: number;
-    totalXPforLevel: number;
-    nextLevelXP: number;
+export type StatsExpDataType = ExperienceType & {
+    stats: XPPointsType;
 };
 
 const useLevel = () => {
+    const statsData = useGetStatsDataQuery();
     const { experienceDataState } = useData();
+    const { selectedDay } = useMainStore();
 
-    const totalPoints = experienceDataState.data?.reduce((acc, expItem) => {
-        return acc + expItem.totalPoints;
-    }, 0);
+    const { totalPoints, totalTasks, totalDays, totalExpStats } =
+        statsData?.data ?? defaultTotalStats;
 
-    const { level, currentLevelXP, nextLevelXP, totalXPforLevel } = calculateLevel(
-        totalPoints || 0
+    const statsExpData: StatsExpDataType[] | undefined = experienceDataState.data?.map(
+        (expItem) => {
+            const expItemStats = totalExpStats.find(
+                (expStatsItem) => expStatsItem.experienceID === expItem.id
+            );
+            return {
+                ...expItem,
+                stats: expItemStats ? expItemStats : defaultXPPoints,
+            };
+        }
     );
+
+    const totalAverages = {
+        pointsPerDay: isNaN(totalPoints / totalDays) ? 0 : totalPoints / totalDays,
+        taskPerDay: isNaN(totalTasks / totalDays) ? 0 : totalTasks / totalDays,
+    };
+
+    const selectedDayStats = statsData.data?.dailyStats.find(
+        (dayStatItem) => dayStatItem.dayID === selectedDay.get?.id
+    );
+
+    const totalLevelDetails = calculateLevel(totalPoints, totalAverages.pointsPerDay);
 
     return {
         totalPoints,
-        levelDetails: {
-            level,
-            currentLevelXP,
-            nextLevelXP,
-            totalXPforLevel,
-        },
-        experienceData: experienceDataState.data,
+        totalTasks,
+        totalDays,
+        statsExpData,
+        totalAverages,
+        selectedDayStats,
+        overAllLevel: totalLevelDetails,
     };
 };
 

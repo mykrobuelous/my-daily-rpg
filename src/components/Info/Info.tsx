@@ -1,26 +1,13 @@
 import { twMerge } from 'tailwind-merge';
-
-type InfoType = 'sm' | 'md' | 'lg';
+import { infoSizeConfigstwClass, InfoSizeType } from './infoConfigTypes';
 
 interface Props {
     className?: string;
     label: string;
     text: string | number;
     colortwClass: string;
-    size?: InfoType;
+    size?: InfoSizeType;
 }
-
-const infoSizeConfigstwClass = {
-    sm: {
-        textSize: 'text-sm',
-    },
-    md: {
-        textSize: 'text-md',
-    },
-    lg: {
-        textSize: 'text-lg',
-    },
-};
 
 const Info: React.FC<Props> = ({ className, label, text, colortwClass, size = 'md' }) => {
     const { textSize } = infoSizeConfigstwClass[size];

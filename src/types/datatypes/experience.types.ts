@@ -1,4 +1,4 @@
-import { IDBrand } from '../utils/types/BrandType';
+import { IDBrand } from '../brand.types';
 
 export type ExpColorType = {
     text: string;
@@ -15,5 +15,4 @@ export type ExperienceType = {
     color: ExpColorType;
     description: string;
     guideQuestion: string;
-    totalPoints: number;
 };

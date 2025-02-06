@@ -1,11 +1,13 @@
 import { twMerge } from 'tailwind-merge';
-import { XPType } from '../../../../data/XPType';
-import { CircleCheckBig, Trash2, TrendingUp } from 'lucide-react';
+import { Trash2, TrendingUp } from 'lucide-react';
 import LogoText from '../../../../components/LogoText/LogoText';
 import { getLevelText } from '../../../../utils/function/getDifficultyText';
 import ChipPoints from '../../../../components/Chip/ChipPoints';
 import useData from '../../../../hooks/useData';
 import dayjs from 'dayjs';
+import { XPType } from '@/types/datatypes/xp.types';
+import { getExperienceLogo } from '@/utils/function/getExperienceLogo';
+import { useMemo } from 'react';
 
 interface Props {
     className?: string;
@@ -17,9 +19,15 @@ interface Props {
 const DailyQuestItem: React.FC<Props> = ({ className, questItem, onTrash, onClick }) => {
     const { experienceDataState } = useData();
 
-    const colorMap = experienceDataState.data?.find(
-        (experienceItem) => experienceItem.id === questItem.experienceID
-    )?.color || { text: '', gradient: '', xp: '' };
+    const colorMap = useMemo(
+        () =>
+            experienceDataState.data?.find(
+                (experienceItem) => experienceItem.id === questItem.experienceID
+            )?.color,
+        [experienceDataState.data, questItem.experienceID]
+    );
+
+    const ExpLogo = getExperienceLogo(questItem.experienceID);
 
     return (
         <div
@@ -34,8 +42,8 @@ const DailyQuestItem: React.FC<Props> = ({ className, questItem, onTrash, onClic
         >
             <div className="flex w-full items-center justify-between">
                 <div className="flex items-center gap-3">
-                    <div className="flex w-80 items-center gap-2">
-                        <CircleCheckBig className={twMerge('mt-1', colorMap.text)} size={32} />
+                    <div className="flex w-80 items-center gap-4">
+                        <ExpLogo className={twMerge('mt-1 text-white', colorMap?.text)} size={32} />
                         <div>
                             <p className="text-base font-semibold text-gray-100">
                                 {questItem.questDetails.quest}
@@ -61,7 +69,7 @@ const DailyQuestItem: React.FC<Props> = ({ className, questItem, onTrash, onClic
                 <div className="flex gap-3">
                     <ChipPoints
                         content={`+${questItem.questDetails.points}`}
-                        color={colorMap.xp}
+                        color={colorMap?.xp}
                         prefix="XP"
                     />
                     <button className="rounded-lg p-1.5 opacity-0 transition-all duration-200 group-hover:opacity-100">
@@ -78,7 +86,7 @@ const DailyQuestItem: React.FC<Props> = ({ className, questItem, onTrash, onClic
             </div>
 
             <div className="absolute bottom-0 left-0 h-1 w-full overflow-hidden rounded-b-xl">
-                <div className={twMerge('h-full w-[75%]', colorMap.gradient)} />
+                <div className={twMerge('h-full w-[75%] bg-black', colorMap?.gradient)} />
             </div>
         </div>
     );

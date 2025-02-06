@@ -1,18 +1,20 @@
 import { FC, ReactNode, useState } from 'react';
-import { ModalContext } from './ModalContext';
-import Modal from '../../view/ModalView/Modal/Modal';
-import NewDateModal from '../../view/ModalView/NewDateModal/NewDateModal';
-import ConfirmModal from '../../view/ModalView/ConfirmModal/ConfirmModal';
 import ReactDOM from 'react-dom';
-import UpdateQuestModal from '../../view/ModalView/UpdateQuestModal/UpdateQuestModal';
-import { IDBrand } from '../../utils/types/BrandType';
-import { DefaultQuestValues } from '../../utils/types/FormTypes/DefaultQuestTypes';
-import useData from '../../hooks/useData';
+import { QuestFormValuesType } from '@/types/formtypes/questForm.types';
+import { IDBrand } from '@/types/brand.types';
+import useData from '@/hooks/useData';
+import ConfirmModal from '@/view/ModalView/ConfirmModal/ConfirmModal';
+import UpdateQuestModal from '@/view/ModalView/UpdateQuestModal/UpdateQuestModal';
+import { ModalContext } from './ModalContext';
+import Modal from '@/view/ModalView/Modal/Modal';
+import NewDateModal from '@/view/ModalView/NewDateModal/NewDateModal';
+import NewQuestTemplateModal from '@/view/ModalView/QuestTemplateModal/QuestTemplateModal';
 
 export const ModalProvider: FC<{ children: ReactNode }> = ({ children }) => {
     const [newDateModal, setNewDateModal] = useState<boolean>(false);
     const [confirmModalContent, setConfirmModalContent] = useState<ReactNode | null>(null);
     const [updateQuestModalContent, setUpdateQuestModalContent] = useState<ReactNode | null>(null);
+    const [newQuestModalContent, setNewQuestModalContent] = useState<ReactNode | null>(null);
     const { dayDataState } = useData();
 
     const showConfirmModal = (onConfirm: () => void, title?: string, message?: string) => {
@@ -31,7 +33,7 @@ export const ModalProvider: FC<{ children: ReactNode }> = ({ children }) => {
     };
 
     const showUpdateQuestModal = (
-        onConfirm: (questValues: DefaultQuestValues) => void,
+        onConfirm: (questValues: QuestFormValuesType) => void,
         dayID: IDBrand,
         questID: IDBrand
     ) => {
@@ -41,7 +43,7 @@ export const ModalProvider: FC<{ children: ReactNode }> = ({ children }) => {
         const questData = newDayData.QuestXP.find((questItem) => questItem.id === questID);
         if (!questData) return;
 
-        const updateQuest: DefaultQuestValues = {
+        const updateQuest: QuestFormValuesType = {
             quest: questData.questDetails.quest,
             xpPoints: questData.questDetails.points,
             type: questData.experienceID,
@@ -60,6 +62,11 @@ export const ModalProvider: FC<{ children: ReactNode }> = ({ children }) => {
         setUpdateQuestModalContent(content);
     };
 
+    const showNewQuestModal = () => {
+        const content = <NewQuestTemplateModal />;
+        setNewQuestModalContent(content);
+    };
+
     return (
         <ModalContext.Provider
             value={{
@@ -70,6 +77,7 @@ export const ModalProvider: FC<{ children: ReactNode }> = ({ children }) => {
                 },
                 showConfirmModal,
                 showUpdateQuestModal,
+                showNewQuestModal,
             }}
         >
             {children}
@@ -91,6 +99,13 @@ export const ModalProvider: FC<{ children: ReactNode }> = ({ children }) => {
                 ReactDOM.createPortal(
                     <Modal onClose={() => setUpdateQuestModalContent(null)}>
                         {updateQuestModalContent}
+                    </Modal>,
+                    document.body
+                )}
+            {newQuestModalContent &&
+                ReactDOM.createPortal(
+                    <Modal onClose={() => setNewQuestModalContent(null)}>
+                        {newQuestModalContent}
                     </Modal>,
                     document.body
                 )}

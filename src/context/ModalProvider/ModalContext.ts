@@ -1,6 +1,6 @@
+import { IDBrand } from '@/types/brand.types';
+import { QuestFormValuesType } from '@/types/formtypes/questForm.types';
 import { createContext } from 'react';
-import { IDBrand } from '../../utils/types/BrandType';
-import { DefaultQuestValues } from '../../utils/types/FormTypes/DefaultQuestTypes';
 
 export type ModalType = {
     isOpen: boolean;
@@ -12,10 +12,11 @@ export interface ModalContextProps {
     newDateModal: ModalType;
     showConfirmModal: (onConfirm: () => void, title?: string, message?: string) => void;
     showUpdateQuestModal: (
-        onConfirm: (questValues: DefaultQuestValues) => void,
+        onConfirm: (questValues: QuestFormValuesType) => void,
         dayID: IDBrand,
         questID: IDBrand
     ) => void;
+    showNewQuestModal: () => void;
 }
 
 export const ModalContext = createContext<ModalContextProps | undefined>(undefined);

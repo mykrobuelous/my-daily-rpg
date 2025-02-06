@@ -1,7 +1,7 @@
+import { ModalProvider } from '@/context/ModalProvider/ModalProvider';
+import store from '@/store/store';
 import { Toaster } from 'react-hot-toast';
-import { ModalProvider } from '../../context/ModalProvider/ModalProvider';
 import { Provider } from 'react-redux';
-import store from '../../store/store';
 
 interface Props {
     children?: React.ReactNode;

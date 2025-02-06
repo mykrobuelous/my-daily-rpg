@@ -1,6 +1,6 @@
-import { LevelDataType } from '../../data/XPData';
+import { XPLevelDataType } from '@/types/datatypes/xp.types';
 
-export const getLevelText = (level: LevelDataType) => {
+export const getLevelText = (level: XPLevelDataType) => {
     switch (level) {
         case 'MIN':
             return 'Minimum';

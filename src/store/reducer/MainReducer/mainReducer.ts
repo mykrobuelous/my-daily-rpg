@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { RootState } from '../../store';
-import { IDBrand } from '../../../utils/types/BrandType';
-import { OtherRouteType, RouteType } from './mainReducerConfigs';
+import { OtherRouteType, ROUTE, RouteType } from './mainReducerConfigs';
+import { IDBrand } from '@/types/brand.types';
+import { RootState } from '@/store/store';
 
 interface MainRouteState {
     selectedDayIDState: IDBrand | null;
@@ -18,7 +18,7 @@ const mainReducer = createSlice({
     initialState,
     reducers: {
         setSelectedDayIDAction: (state, action: PayloadAction<IDBrand | null>) => {
-            state.route = 'DAY_ROUTE';
+            state.route = ROUTE.DAY_ROUTE;
             state.selectedDayIDState = action.payload;
         },
         setRouteAction: (state, action: PayloadAction<OtherRouteType>) => {

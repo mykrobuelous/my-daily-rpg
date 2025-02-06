@@ -1,30 +1,23 @@
 import { twMerge } from 'tailwind-merge';
-import Input from '../../../components/Input/Input';
-import Button from '../../../components/Button/Button';
-import ChipSelection from './ChipSelection';
-import { IDBrand } from '../../../utils/types/BrandType';
 import { Controller, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import Select from '../../../components/Select/Select';
-// import { XPType } from '../../../data/XPType';
-// import dayjs from 'dayjs';
-// import { generateID } from '../../../utils/function/generateID';
-import { runToast } from '../../../lib/ReactHotToast/runToast';
-import CusCheckIcon from '../../../lib/ReactHotToast/CusCheckIcon';
-import {
-    DefaultQuestValues,
-    defaultQuestZodSchema,
-} from '../../../utils/types/FormTypes/DefaultQuestTypes';
 import { RefreshCcw } from 'lucide-react';
-import { useAddXPDataMutation } from '../../../api/rtkAPI/dayAPI';
-import useMainStore from '../../../store/reducer/MainReducer/useMainStore';
-// import useMainStore from '../../../store/reducer/MainReducer/useMainStore';
+import { defaultQuestZodSchema, QuestFormValuesType } from '@/types/formtypes/questForm.types';
+import { IDBrand } from '@/types/brand.types';
+import { useAddXPDataMutation } from '@/api/rtkAPI/dayAPI';
+import useMainStore from '@/store/reducer/MainReducer/useMainStore';
+import { runToast } from '@/lib/ReactHotToast/runToast';
+import CusCheckIcon from '@/lib/ReactHotToast/CusCheckIcon';
+import Input from '@/components/Input/Input';
+import Select from '@/components/Select/Select';
+import ChipSelection from './components/ChipSelection';
+import Button from '@/components/Button/Button';
 
 interface Props {
     className?: string;
 }
 
-const defaultValues: DefaultQuestValues = {
+const defaultValues: QuestFormValuesType = {
     quest: '',
     xpPoints: 0,
     type: '' as IDBrand,
@@ -32,14 +25,13 @@ const defaultValues: DefaultQuestValues = {
 };
 
 const AddXPPoints: React.FC<Props> = ({ className }) => {
-    // const { selectedDay } = useMainStore();
     const {
         control,
         handleSubmit,
         reset,
         formState: { isValid },
         watch,
-    } = useForm<DefaultQuestValues>({
+    } = useForm<QuestFormValuesType>({
         defaultValues,
         resolver: zodResolver(defaultQuestZodSchema),
     });
@@ -50,7 +42,7 @@ const AddXPPoints: React.FC<Props> = ({ className }) => {
 
     const isFormChanged = JSON.stringify(fieldValues) !== JSON.stringify(defaultValues);
 
-    const onSubmitForm = (data: DefaultQuestValues) => {
+    const onSubmitForm = (data: QuestFormValuesType) => {
         const { quest, xpPoints, type, level } = data;
 
         try {

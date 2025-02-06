@@ -1,14 +1,14 @@
 import { twMerge } from 'tailwind-merge';
 import dayjs from 'dayjs';
-import LabelText from '../../components/LabelText/LabelText';
 import { Calendar, ChartLine, ChartNoAxesColumn, FileChartColumn, Trash2 } from 'lucide-react';
 import RPGLevel from './RPGLevel';
 import TopDailyXP from './TopDailyXP';
-import { useModalContext } from '../../context/ModalProvider/useModalContext';
-import useMainStore from '../../store/reducer/MainReducer/useMainStore';
-import { runToast } from '../../lib/ReactHotToast/runToast';
-import CusCheckIcon from '../../lib/ReactHotToast/CusCheckIcon';
-import { useDeleteDayDataMutation } from '../../api/rtkAPI/dayAPI';
+import useMainStore from '@/store/reducer/MainReducer/useMainStore';
+import { useModalContext } from '@/context/ModalProvider/useModalContext';
+import { useDeleteDayDataMutation } from '@/api/rtkAPI/dayAPI';
+import LabelText from '@/components/LabelText/LabelText';
+import { runToast } from '@/lib/ReactHotToast/runToast';
+import CusCheckIcon from '@/lib/ReactHotToast/CusCheckIcon';
 
 interface Props {
     className?: string;
@@ -28,13 +28,13 @@ const TopNav: React.FC<Props> = ({ className }) => {
         <div className={twMerge('flex items-center py-4', className)}>
             <div className="flex w-full items-center gap-10 px-6">
                 <LabelText label="Selected Date" Icon={Calendar} className="gap-1">
-                    <p className="text-md font-bold">
+                    <p className="text-xl font-bold">
                         {dayjs(selectedDay.get?.date).format('MMMM DD, YYYY')}
                     </p>
                 </LabelText>
                 <LabelText label="Quests" Icon={ChartLine} className="gap-1">
                     <div className="flex-center w-full">
-                        <p className="text-md font-bold">{totalQuest}</p>
+                        <p className="text-xl font-bold">{totalQuest}</p>
                     </div>
                 </LabelText>
                 <LabelText label="Daily XP Points" className="gap-1.5" Icon={FileChartColumn}>
@@ -42,7 +42,7 @@ const TopNav: React.FC<Props> = ({ className }) => {
                 </LabelText>
                 <LabelText label="Total XP" Icon={ChartNoAxesColumn} className="gap-1">
                     <div className="flex-center w-full">
-                        <p className="text-md font-bold">{totalXP}</p>
+                        <p className="text-xl font-bold">{totalXP}</p>
                     </div>
                 </LabelText>
                 <Trash2
@@ -69,7 +69,7 @@ const TopNav: React.FC<Props> = ({ className }) => {
                 />
             </div>
             <div className="ml-auto flex h-full items-center gap-4 border-l border-gray-600 px-4">
-                <RPGLevel level={12} />
+                <RPGLevel />
             </div>
         </div>
     );

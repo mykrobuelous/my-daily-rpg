@@ -37,7 +37,9 @@
     }
 
     .card-glossy {
-        @apply border border-white/10 bg-black/30 shadow-lg backdrop-blur-sm before:absolute before:inset-0 before:rounded-lg before:bg-gradient-to-t before:from-white/10 before:to-transparent;
+        @apply border border-white/10 bg-black/30 shadow-lg;
+    }
+    .elevate {
         @apply duration-100 ease-in hover:scale-[1.01];
     }
 }

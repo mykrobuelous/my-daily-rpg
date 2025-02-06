@@ -1,7 +1,7 @@
 // store.ts
 import { configureStore } from '@reduxjs/toolkit';
 import mainReducer from './reducer/MainReducer/mainReducer';
-import { baseAPI } from '../api/rtkAPI/baseAPI';
+import { baseAPI } from '@/api/rtkAPI/baseAPI';
 
 const store = configureStore({
     reducer: {

@@ -1,9 +1,9 @@
+import { ExpColorType } from '@/types/datatypes/experience.types';
 import { twMerge } from 'tailwind-merge';
-import { ExpColorType } from '../../data/ExperienceType';
 
 interface Props {
     className?: string;
-    label: string;
+    label: string | number;
     color?: ExpColorType;
     cursor?: boolean;
     selected?: boolean;

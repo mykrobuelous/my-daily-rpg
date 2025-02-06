@@ -13,11 +13,12 @@ const MenuCard: React.FC<Props> = ({ className, children, title, box = false }) 
             className={twMerge(
                 'flex flex-col gap-4',
                 'view-full card-glossy rounded-md p-4',
+                'overflow-hidden',
                 className
             )}
         >
             <h2 className="text-2xl font-semibold tracking-wide text-gray-100">{title}</h2>
-            <div className={twMerge('view-full', box ? 'box' : '')}>{children}</div>
+            <div className={twMerge('view-full overflow-hidden', box ? 'box' : '')}>{children}</div>
         </div>
     );
 };

@@ -1,5 +1,6 @@
 import { HomeIcon, LucideIcon } from 'lucide-react';
 import { twMerge } from 'tailwind-merge';
+import { LogoSizeType, LogoTextConfigs } from './logoTextConfigTypes';
 
 interface Props {
     className?: string;
@@ -9,31 +10,6 @@ interface Props {
     size?: LogoSizeType | { font: string; icon: number };
     onClick?: () => void;
 }
-
-type LogoSizeType = 'sm' | 'md' | 'lg' | 'xs' | '2xs';
-
-const LogoTextConfigs = {
-    sm: {
-        font: 'text-lg',
-        icon: 32,
-    },
-    md: {
-        font: 'text-xl',
-        icon: 36,
-    },
-    lg: {
-        font: 'text-2xl',
-        icon: 42,
-    },
-    xs: {
-        font: 'text-sm',
-        icon: 20,
-    },
-    '2xs': {
-        font: 'text-xs',
-        icon: 14,
-    },
-};
 
 const LogoText: React.FC<Props> = ({
     className,

@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import { twMerge } from 'tailwind-merge';
 
 interface Props {
@@ -13,7 +14,11 @@ const LoadBar: React.FC<Props> = ({
     currentPoints,
     colortwClass = 'bg-yellow-500',
 }) => {
-    const percentage = (currentPoints / totalPoints) * 100;
+    const percentage = useMemo(
+        () => (currentPoints / totalPoints) * 100,
+        [currentPoints, totalPoints]
+    );
+
     return (
         <div
             className={twMerge(

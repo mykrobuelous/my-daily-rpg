@@ -1,6 +1,6 @@
-import { generateID } from '../utils/function/generateID';
-import { IDBrand } from '../utils/types/BrandType';
-import { DayType } from './DayType';
+import { DayType } from '@/types/datatypes/day.types';
+import { IDBrand } from '@/types/brand.types';
+import { generateID } from '@/utils/function/generateID';
 
 export const mockDayData: DayType[] = [
     {
@@ -62,21 +62,95 @@ export const mockDayData: DayType[] = [
     {
         id: generateID(),
         date: '01.24.2024',
-        QuestXP: [],
+        QuestXP: [
+            {
+                id: generateID(),
+                experienceID: 'ABC02' as IDBrand,
+                datetimeCreated: new Date().toISOString(),
+                questDetails: {
+                    quest: 'Practice a hobby for 1 hour',
+                    points: 50,
+                    level: 'MAX',
+                },
+            },
+            {
+                id: generateID(),
+                experienceID: 'ABC04' as IDBrand,
+                datetimeCreated: new Date().toISOString(),
+                questDetails: {
+                    quest: 'Go for a 30-minute walk',
+                    points: 25,
+                    level: 'MID',
+                },
+            },
+        ],
     },
     {
         id: generateID(),
         date: '01.25.2024',
-        QuestXP: [],
+        QuestXP: [
+            {
+                id: generateID(),
+                experienceID: 'ABC02' as IDBrand,
+                datetimeCreated: new Date().toISOString(),
+                questDetails: {
+                    quest: 'Practice a hobby for 1 hour',
+                    points: 50,
+                    level: 'MAX',
+                },
+            },
+        ],
     },
     {
         id: generateID(),
         date: '01.26.2024',
-        QuestXP: [],
+        QuestXP: [
+            {
+                id: generateID(),
+                experienceID: 'ABC02' as IDBrand,
+                datetimeCreated: new Date().toISOString(),
+                questDetails: {
+                    quest: 'Practice a hobby for 1 hour',
+                    points: 50,
+                    level: 'MAX',
+                },
+            },
+        ],
     },
     {
         id: generateID(),
         date: '01.27.2024',
-        QuestXP: [],
+        QuestXP: [
+            {
+                id: generateID(),
+                experienceID: 'ABC02' as IDBrand,
+                datetimeCreated: new Date().toISOString(),
+                questDetails: {
+                    quest: 'Practice a hobby for 1 hour',
+                    points: 50,
+                    level: 'MAX',
+                },
+            },
+            {
+                id: generateID(),
+                experienceID: 'ABC04' as IDBrand,
+                datetimeCreated: new Date().toISOString(),
+                questDetails: {
+                    quest: 'Cook a new recipe',
+                    points: 30,
+                    level: 'MID',
+                },
+            },
+            {
+                id: generateID(),
+                experienceID: 'ABC03' as IDBrand,
+                datetimeCreated: new Date().toISOString(),
+                questDetails: {
+                    quest: 'Learn a new language for 1 hour',
+                    points: 60,
+                    level: 'MAX',
+                },
+            },
+        ],
     },
 ];

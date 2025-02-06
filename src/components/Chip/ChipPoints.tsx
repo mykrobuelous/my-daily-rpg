@@ -2,7 +2,7 @@ import { twMerge } from 'tailwind-merge';
 
 interface Props {
     className?: string;
-    content: string;
+    content: string | number;
     color?: string;
     prefix?: string;
 }
@@ -21,7 +21,7 @@ const ChipPoints: React.FC<Props> = ({
                     color
                 )}
             >
-                <span className="flex text-sm font-bold">
+                <span className="text-md flex font-bold">
                     {`${content}${prefix ? ` ${prefix}` : ''}`}
                 </span>
             </div>

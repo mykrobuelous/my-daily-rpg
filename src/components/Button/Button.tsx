@@ -11,6 +11,7 @@ interface Props {
     disabled?: boolean;
     onClick?: () => void;
     variant?: ButtonTypeConfigsType;
+    texttwClass?: string;
 }
 
 const Button: React.FC<Props> = ({
@@ -21,6 +22,7 @@ const Button: React.FC<Props> = ({
     disabled = false,
     onClick,
     variant = 'blue',
+    texttwClass,
 }) => {
     const variantColor = useMemo(() => buttonTypeConfigs[variant], [variant]);
 
@@ -40,7 +42,7 @@ const Button: React.FC<Props> = ({
             onClick={onClick}
         >
             {Icon && <Icon size={20} className="flex-shrink-0" />}
-            <span className="text-base font-semibold">{text}</span>
+            <span className={twMerge('text-base font-semibold', texttwClass)}>{text}</span>
         </button>
     );
 };

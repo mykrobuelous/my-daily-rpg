@@ -1,7 +1,7 @@
+import Chip from '@/components/Chip/Chip';
+import useData from '@/hooks/useData';
+import { IDBrand } from '@/types/brand.types';
 import { twMerge } from 'tailwind-merge';
-import Chip from '../../../components/Chip/Chip';
-import { IDBrand } from '../../../utils/types/BrandType';
-import useData from '../../../hooks/useData';
 
 interface Props {
     className?: string;

@@ -1,10 +1,10 @@
 import { twMerge } from 'tailwind-merge';
 import DailyQuestItem from './DailyQuestItem';
-import { runToast } from '../../../../lib/ReactHotToast/runToast';
-import CusCheckIcon from '../../../../lib/ReactHotToast/CusCheckIcon';
-import { useModalContext } from '../../../../context/ModalProvider/useModalContext';
-import useMainStore from '../../../../store/reducer/MainReducer/useMainStore';
-import { useDeleteXPDataMutation, useUpdateXPDataMutation } from '../../../../api/rtkAPI/dayAPI';
+import useMainStore from '@/store/reducer/MainReducer/useMainStore';
+import { useModalContext } from '@/context/ModalProvider/useModalContext';
+import { useDeleteXPDataMutation, useUpdateXPDataMutation } from '@/api/rtkAPI/dayAPI';
+import { runToast } from '@/lib/ReactHotToast/runToast';
+import CusCheckIcon from '@/lib/ReactHotToast/CusCheckIcon';
 
 interface Props {
     className?: string;

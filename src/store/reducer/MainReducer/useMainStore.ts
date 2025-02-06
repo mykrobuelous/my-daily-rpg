@@ -1,8 +1,8 @@
-import useData from '../../../hooks/useData';
-import { IDBrand } from '../../../utils/types/BrandType';
-import { useAppDispatch, useAppSelector } from '../../reduxhooks';
+import { useAppDispatch, useAppSelector } from '@/store/reduxhooks';
 import { mainState, setRouteAction, setSelectedDayIDAction } from './mainReducer';
 import { OtherRouteType } from './mainReducerConfigs';
+import useData from '@/hooks/useData';
+import { IDBrand } from '@/types/brand.types';
 
 const useMainStore = () => {
     const { selectedDayIDState, route } = useAppSelector(mainState);

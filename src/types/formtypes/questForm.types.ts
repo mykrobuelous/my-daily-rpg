@@ -1,7 +1,7 @@
 import { z } from 'zod';
-import { IDBrand } from '../BrandType';
+import { IDBrand } from '../brand.types';
 
-export type DefaultQuestValues = {
+export type QuestFormValuesType = {
     quest: string;
     xpPoints: number;
     type: IDBrand;

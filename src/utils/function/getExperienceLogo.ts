@@ -1,5 +1,5 @@
+import { IDBrand } from '@/types/brand.types';
 import { BookOpenText, Brain, Cog, Cross, Swords } from 'lucide-react';
-import { IDBrand } from '../types/BrandType';
 
 export const getExperienceLogo = (expID?: IDBrand) => {
     switch (expID) {
